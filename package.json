@@ -3,8 +3,13 @@
   "description": "Stars Fluid Chrome Experiment",
   "version": "1.0.0",
   "author": "Johann Troendle",
+  "scripts": {
+    "build": "echo 'No build step'",
+    "start": "npx serve src"
+  },
   "devDependencies": {
     "gulp": "latest",
-    "gulp-connect": "latest"
+    "gulp-connect": "latest",
+    "serve": "latest"
   }
 }
