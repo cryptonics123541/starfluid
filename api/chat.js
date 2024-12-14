@@ -1,6 +1,17 @@
-import { NextResponse } from 'next/server';
+export const config = {
+  runtime: 'edge',
+};
 
-export async function POST(request) {
+export default async function handler(request) {
+  if (request.method !== 'POST') {
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
   try {
     const { message } = await request.json();
     
@@ -17,23 +28,32 @@ export async function POST(request) {
         messages: [{
           role: 'user',
           content: message
-        }],
-        temperature: 0.7
+        }]
       })
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error('Anthropic API Error:', errorData);
-      throw new Error(errorData.error?.message || 'API request failed');
+      throw new Error(`Anthropic API error: ${response.status}`);
     }
 
     const data = await response.json();
-    return NextResponse.json(data);
+    
+    return new Response(JSON.stringify({ 
+      message: data.content[0].text 
+    }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   } catch (error) {
-    console.error('Server Error:', error);
-    return NextResponse.json({ 
-      error: 'Failed to process request: ' + error.message 
-    }, { status: 500 });
+    return new Response(JSON.stringify({ 
+      error: `Error: ${error.message}` 
+    }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 } 

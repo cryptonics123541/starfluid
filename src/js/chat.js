@@ -33,21 +33,20 @@ class ChatBot {
                 })
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to get response');
+            const data = await response.json();
+            
+            if (data.error) {
+                throw new Error(data.error);
             }
 
-            const data = await response.json();
-            if (!data.content || !data.content[0] || !data.content[0].text) {
+            if (data.message) {
+                this.addMessageToChat('bot', data.message);
+            } else {
                 throw new Error('Invalid response format');
             }
-            
-            const botResponse = data.content[0].text;
-            this.addMessageToChat('bot', botResponse);
         } catch (error) {
             console.error('Error details:', error);
-            this.addMessageToChat('bot', `Error: ${error.message}. Please try again.`);
+            this.addMessageToChat('bot', `Error: ${error.message}`);
         }
     }
 
