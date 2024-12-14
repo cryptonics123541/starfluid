@@ -19,17 +19,18 @@ export default async function handler(req, res) {
             'https://api.anthropic.com/v1/complete',
             {
                 prompt: `Human: ${message}\n\nAssistant:`,
-                model: 'claude-v1', // Check if this model is correct
+                model: 'claude-3.5-sonnet-20241022', // Update this with the correct model
                 max_tokens_to_sample: 300,
                 temperature: 0.7,
             },
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'x-api-key': process.env.ANTHROPIC_API_KEY, // API key from environment
+                    'x-api-key': process.env.ANTHROPIC_API_KEY, // Environment variable for the API key
                 },
             }
         );
+        
 
         const reply = response.data.completion;
         console.log('Anthropic API Response:', reply); // Log the API response
