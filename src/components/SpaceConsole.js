@@ -1,12 +1,15 @@
 const SpaceConsole = () => {
     const [isTransitioning, setIsTransitioning] = React.useState(false);
     
-    const handleStartSimulation = () => {
+    const handleStartSimulation = (e) => {
+        e.preventDefault();
+        if (isTransitioning) return;
+        
         setIsTransitioning(true);
         document.body.classList.add('zooming');
         setTimeout(() => {
             window.location.href = 'fluid.html';
-        }, 2000);
+        }, 2500);
     };
 
     return (
@@ -14,10 +17,11 @@ const SpaceConsole = () => {
             <SpaceBackground />
             
             {isTransitioning && (
-                <div className="fixed inset-0 bg-black/50 z-50 animate-[zoomIn_2s_ease-in-out]" />
+                <div className="fixed inset-0 z-50 pointer-events-none" />
             )}
             
-            <div className="relative z-10 min-h-screen backdrop-blur-[2px] p-8">
+            <div className={`relative z-10 min-h-screen backdrop-blur-[2px] p-8 transition-opacity duration-2000
+                ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
                 <div className="max-w-2xl mx-auto space-y-8">
                     <header className="flex items-center space-x-2 text-xl text-blue-400">
                         <span className="text-xl">CRYPTONICS TERMINAL v1.0.1</span>

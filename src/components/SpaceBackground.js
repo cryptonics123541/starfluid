@@ -3,9 +3,7 @@ const SpaceBackground = () => {
     
     React.useEffect(() => {
         const initialStars = [];
-        // Increased to 500 stars for more density
         for (let i = 0; i < 500; i++) {
-            // Added color variations for stars
             const colors = [
                 'rgba(255, 255, 255, VAR)',  // Bright white
                 'rgba(200, 230, 255, VAR)',  // Bright blue
@@ -15,31 +13,28 @@ const SpaceBackground = () => {
             ];
             
             const color = colors[Math.floor(Math.random() * colors.length)]
-                .replace('VAR', (Math.random() * 0.3 + 0.7)); // Higher opacity: 0.7-1.0
+                .replace('VAR', '1'); // Set full opacity
 
             initialStars.push({
                 x: Math.random() * 100,
                 y: Math.random() * 100,
-                // Increased size variation
-                size: Math.random() * 4 + 2, // Bigger stars: 2-6px
+                size: Math.random() * 4 + 2,
                 speed: Math.random() * 0.15 + 0.05,
-                opacity: Math.random() * 0.2 + 0.8, // Much higher opacity: 0.8-1.0
+                opacity: 1, // Set full opacity
                 layer: Math.floor(Math.random() * 3),
                 color: color,
-                // Add subtle twinkling effect
                 twinkleSpeed: Math.random() * 2 + 1
             });
         }
         setStars(initialStars);
 
-        // Animation code remains the same
         let animationFrame;
         const animate = () => {
             setStars(prevStars => 
                 prevStars.map(star => ({
                     ...star,
                     x: star.x - star.speed * (star.layer + 1),
-                    opacity: star.opacity * (0.8 + Math.sin(Date.now() / (1000 * star.twinkleSpeed)) * 0.2),
+                    // Remove opacity animation
                     ...(star.x < 0 && { x: 100 })
                 }))
             );
@@ -66,8 +61,8 @@ const SpaceBackground = () => {
                         filter: `blur(${star.layer === 0 ? '0px' : '0.5px'})`,
                         transition: 'left 50ms linear',
                         zIndex: star.layer,
-                        // Enhanced glow effect
-                        boxShadow: `0 0 ${star.size * 3}px ${star.color.replace('VAR', '1')}` // Stronger glow
+                        boxShadow: `0 0 ${star.size * 3}px ${star.color}`,
+                        willChange: 'transform' // Optimize for animation
                     }}
                 />
             ))}
