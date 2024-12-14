@@ -39,7 +39,8 @@
           self.addDye = true;
         }
       }, false);
-      canvas.addEventListener('mousemove', this.mousemove.bind(this), false);
+      ctx.gl.canvas.addEventListener('mousemove', this.mousemove.bind(this), false);
+
     },
 
     update: function(ctx) {
