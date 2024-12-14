@@ -1,313 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Stars Fluid</title>
-  <meta charset="utf-8"/>
-  <meta name="description" content="Stars Fluid Chrome Experiment">
-  <meta name="keywords" content="JavaScript,WegGL,Fluid,Particles">
-  <meta name="author" content="Johann Troendle">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+        }
 
-  <style>
-    html, body { margin: 0; padding: 0; background-color: #000; }
-    canvas { position: absolute; top: 0; left: 0; z-index: 0; cursor: pointer; }
-    #screenshot { position: absolute; width: 100%; height: 100%; z-index: 1; display: none; }
-    #ce { position: absolute; z-index: 3; bottom: 10px; right: 10px }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-    .hcenter { display: table; width:100%; height:100vh; }
-    .vcenter { display: table-cell; width:100%; height:100%; text-align: center; vertical-align: middle; }
+        nav {
+            margin-bottom: 20px;
+        }
 
-    #helper {
-      width: 256px;
-      height: 256px;
-      background-image: url('src/img/mouses.png');
-      opacity: .95;
-      display: inline-block;
+        nav a {
+            color: #0066cc;
+            text-decoration: none;
+            margin-right: 20px;
+        }
 
-      -webkit-animation: play 1.75s steps(3) infinite;
-         -moz-animation: play 1.75s steps(3) infinite;
-          -ms-animation: play 1.75s steps(3) infinite;
-           -o-animation: play 1.75s steps(3) infinite;
-              animation: play 1.75s steps(3) infinite;
-    }
+        nav a:hover {
+            text-decoration: underline;
+        }
 
-    @-webkit-keyframes play {
-       from { background-position:    0px; }
-         to { background-position: -768px; }
-    }
+        .chat-container {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            min-height: 400px;
+        }
 
-    @-moz-keyframes play {
-       from { background-position:    0px; }
-         to { background-position: -768px; }
-    }
+        .input-container {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
 
-    @-ms-keyframes play {
-       from { background-position:    0px; }
-         to { background-position: -768px; }
-    }
+        textarea {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+            min-height: 40px;
+        }
 
-    @-o-keyframes play {
-       from { background-position:    0px; }
-         to { background-position: -768px; }
-    }
+        button {
+            padding: 10px 20px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    @keyframes play {
-       from { background-position:    0px; }
-         to { background-position: -768px; }
-    }
-  </style>
-  
-  <script src="src/js/lib/rtt.gl.js"></script>
-  <script src="src/js/lib/stage.gl.js"></script>
-  <script src="src/js/lib/loader.gl.js"></script>
-    
-  <script src="src/js/motion.js"></script>
-  <script src="src/js/fluid.js"></script>
-  <script src="src/js/particles.js"></script>
-  <script src="src/js/visualizer.js"></script>
+        button:hover {
+            background: #0052a3;
+        }
+    </style>
 </head>
-
 <body>
-  <img id="screenshot" src="src/img/starsfluid.png"/>
-  <canvas id="canvas" width="512" height="512"></canvas>
+    <div class="container">
+        <nav>
+            <a href="/">Home</a>
+            <a href="/stars.html">Stars Fluid</a>
+        </nav>
 
-  <div class="hcenter">
-    <div class="vcenter">
-      <div id="helper"></div>
+        <h1>AI Assistant</h1>
+        
+        <div class="chat-container" id="chat">
+            <!-- Chat messages will appear here -->
+        </div>
+
+        <div class="input-container">
+            <textarea id="userInput" placeholder="Type your message here..."></textarea>
+            <button onclick="sendMessage()">Send</button>
+        </div>
     </div>
-  </div>
 
-  <!-- Fluid Shaders -->
-  <script type="application/x-glsl" id="fluid-reset">
-    precision highp float;
-    varying vec2 vUv;
-    void main() {
-      gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-    }
-  </script>
+    <script>
+        async function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const chatContainer = document.getElementById('chat');
+            
+            // Add user message to chat
+            const userMessage = document.createElement('p');
+            userMessage.textContent = `You: ${userInput.value}`;
+            chatContainer.appendChild(userMessage);
 
-  <script type="application/x-glsl" id="fluid-motion">
-    precision highp float;
-    varying vec2 vUv;
-    uniform sampler2D tSampler;
-    uniform float ratio;
-    uniform vec2 point;
-    uniform float dye;
-    uniform vec2 velocity;
-    const float VELOCITY_RADIUS = 500.0;
-    const float DYE_RADIUS = 2000.0;
-    void main() {
-      gl_FragColor = texture2D(tSampler, vUv);
-      vec2 pos = vUv * vec2(ratio, 1.0);
-      vec2 rPoint = point * vec2(ratio, 1.0);
-      float gaussian = -dot(pos - rPoint, pos - rPoint);
-      gl_FragColor.xy = velocity * exp(gaussian * VELOCITY_RADIUS) * 100.0;
-      gl_FragColor.z = dye * exp(gaussian * DYE_RADIUS);
-    }
-  </script>
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: userInput.value })
+                });
 
-  <script type="application/x-glsl" id="fluid-solver">
-    precision highp float;
-    varying vec2 vUv;
-    uniform sampler2D tSampler;
-    uniform sampler2D motion;
-    uniform float dt;
-    uniform vec2 d;
-    vec2 dx = vec2(d.x, 0);
-    vec2 dy = vec2(0, d.y);
-    const float v = 0.05;
-    const float K = 0.15;
-    const float CentralScale = 1.0/2.0;
-    vec2 Directions[4];
+                const data = await response.json();
+                
+                // Add AI response to chat
+                const aiMessage = document.createElement('p');
+                aiMessage.textContent = `AI: ${data.response}`;
+                chatContainer.appendChild(aiMessage);
+            } catch (error) {
+                console.error('Error:', error);
+                const errorMessage = document.createElement('p');
+                errorMessage.textContent = 'Error: Could not send message';
+                errorMessage.style.color = 'red';
+                chatContainer.appendChild(errorMessage);
+            }
 
-    bool IsBoundary(vec2 uv) {
-      return (uv.x <= d.x || uv.x > (1.0 - d.x) || uv.y <= d.y || uv.y > (1.0 - d.y));
-    }
-
-    vec3 bilerp(sampler2D t, vec2 pos) {
-      vec3 x = texture2D(t, pos).xyz;
-      vec3 x0 = texture2D(t, pos - dx).xyz;
-      vec3 x1 = texture2D(t, pos + dx).xyz;
-      vec3 y0 = texture2D(t, pos - dy).xyz;
-      vec3 y1 = texture2D(t, pos + dy).xyz;
-      vec3 res = (1.0 * x + x0 + x1 + y0 + y1) * 0.2;
-      return res;
-    }
-
-    void main() {
-      Directions[0] = vec2(1,0);
-      Directions[1] = vec2(0,-1);
-      Directions[2] = vec2(-1,0);
-      Directions[3] = vec2(0,1);
-
-      vec4 FC = texture2D(tSampler, vUv);
-      vec3 FR = texture2D(tSampler, vUv + dx).xyz;
-      vec3 FL = texture2D(tSampler, vUv - dx).xyz;
-      vec3 FT = texture2D(tSampler, vUv + dy).xyz;
-      vec3 FD = texture2D(tSampler, vUv - dy).xyz;
-
-      vec2 Laplacian = FR.xy + FL.xy + FT.xy + FD.xy - 4.0 * FC.xy;
-      vec3 UdX = (FR - FL) * CentralScale;
-      vec3 UdY = (FT - FD) * CentralScale;
-      vec2 Viscosity = v * Laplacian;
-      vec2 DdX = vec2(UdX.z, UdY.z); 
-      vec2 PdX = (K/dt) * DdX;
-      vec3 Temp = vec3(DdX, UdX.x + UdY.y);
-      FC.z = clamp(FC.z - dt * dot(FC.xyz, Temp), 0.3, 1.7);  
-      vec2 Was = vUv - dt * FC.xy * d;
-      FC.xy = bilerp(tSampler, Was).xy;
-      FC.xy += dt * (Viscosity - PdX + texture2D(motion, vUv).xy);
-
-      for (int i=0; i<4; i++) {
-        if (IsBoundary(vUv + (d * Directions[i]))) { 
-          FC.xy *= 1.0 - abs(Directions[i]);
+            // Clear input
+            userInput.value = '';
         }
-      } 
-
-      gl_FragColor = FC;
-    }
-  </script>
-
-  <script type="application/x-glsl" id="fluid-dye">
-    precision highp float;
-    varying vec2 vUv;
-    uniform sampler2D tSampler;
-    uniform sampler2D motion;
-    uniform sampler2D solver;
-    uniform float dt;
-    uniform vec2 d;
-    const float acc = 2.0;
-    const float diffusion = 0.994;
-
-    void main() {
-      vec2 Was = vUv - dt * texture2D(solver, vUv).xy * d * acc;
-      gl_FragColor.xyz = texture2D(tSampler, Was).xyz * diffusion;
-      gl_FragColor.z += texture2D(motion, vUv).z;
-      gl_FragColor.a = 1.0;
-    }
-  </script>
-
-  <!-- Particle Shaders -->
-  <script type="application/x-glsl" id="fragment-particle-data">
-    precision highp float;
-    varying vec2 vUv;
-    uniform sampler2D tSampler;
-    uniform sampler2D solver;
-    uniform float dt;
-    uniform vec2 d;
-
-    void main() {
-      vec4 data = texture2D(tSampler, vUv);
-      data.xy += dt * texture2D(solver, data.xy).xy * d * 2.0;
-      if (data.a > 0.0) {
-        data.a -= 0.01;
-      }
-      else {
-        data = vec4(-1);
-      } 
-      gl_FragColor = data;
-    }
-  </script>
-
-  <script type="application/x-glsl" id="vertex-particles">
-    precision highp float;
-    attribute vec2 position;
-    varying vec2 vUv;
-    uniform sampler2D particleData;
-    uniform float ratio;
-
-    void main() {  
-      vec4 data = texture2D(particleData, position);
-      vec2 point = data.xy;
-      float size = data.z;
-
-      vUv = position;
-      vec2 vPos = point * 2.0 - 1.0;
-
-      gl_PointSize = size * ratio;
-      gl_Position = vec4(vPos.x, vPos.y, 0, 1);
-    }
-  </script>
-
-  <script type="application/x-glsl" id="fragment-particles">
-    precision highp float;
-    varying vec2 vUv;
-    uniform float ratio;
-    uniform sampler2D tSampler;
-    const vec4 color = vec4(1.0, 0.5, 0.166, 0.66);
-
-    void main() {
-      gl_FragColor = color;
-    }
-  </script>
-
-  <!-- Visualizer Shader -->
-  <script type="application/x-glsl" id="fluid-visualizer">
-    precision highp float;
-    varying vec2 vUv;
-    uniform sampler2D sampler;
-    uniform sampler2D particles;
-    const vec4 dyeColor = vec4(0.3, .5, 1.1, 1.0);
-
-    void main() {
-      float dye = texture2D(sampler, vUv).z;
-      vec4 particlesTexture = texture2D(particles, vUv);
-      gl_FragColor = dye * dyeColor + particlesTexture;
-    }
-  </script>
-
-  <!-- Main JavaScript -->
-  <script>
-    (function() {
-      var canvas = document.getElementById('canvas');
-
-      var onResize = function() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      };
-      onResize();
-      window.addEventListener('resize', onResize);
-
-      var renderer, gl, supported = true;
-      try {
-        renderer = new Stage.Renderer(canvas);
-        gl = renderer.context.gl;
-      } catch(e) {
-        supported = false;
-      }
-
-      supported = gl && gl.getExtension('OES_texture_float') && gl.getExtension('OES_texture_float_linear');
-
-      if (!supported) {
-        document.getElementById('screenshot').style.display = 'block';
-        setTimeout(function() { 
-          alert('Sorry, experiment is not supported on your browser.')
-        }, 0);
-        return;
-      }
-      
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-      gl.clearColor(0.0, 0.0, 0.0, 1.0);
-
-      renderer
-        .effect(new Stage.Motion())
-        .effect(new Stage.Fluid())
-        .effect(new Stage.Particles())
-        .effect(new Stage.Visualizer());
-
-      Loader.done(function() {
-        renderer.render();
-      });
-
-      document.addEventListener('keydown', function(e) {
-        if (e.keyCode == 32) {
-          renderer.pause();
-        }
-      }, false);
-
-      document.addEventListener('mousedown', function(e) {
-        document.getElementById('helper').style.display = 'none';
-      }, false);
-    })();
-  </script>
+    </script>
 </body>
 </html>

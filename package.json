@@ -12,5 +12,8 @@
     "gulp": "^4.0.2",
     "gulp-connect": "^5.7.0",
     "serve": "^14.2.1"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1"
   }
 }
