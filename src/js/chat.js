@@ -1,65 +1,21 @@
-class ChatBot {
-    constructor() {
-        this.messages = [];
-        this.messageContainer = document.getElementById('chatMessages');
-        this.input = document.getElementById('chatInput');
-        this.sendButton = document.getElementById('sendMessage');
-        
-        this.setupEventListeners();
-    }
-
-    setupEventListeners() {
-        this.sendButton.addEventListener('click', () => this.sendMessage());
-        this.input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.sendMessage();
+// chat.js
+async function sendMessage(message) {
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message })
         });
-    }
 
-    async sendMessage() {
-        const userMessage = this.input.value.trim();
-        if (!userMessage) return;
-
-        this.addMessageToChat('user', userMessage);
-        this.input.value = '';
-
-        try {
-            const response = await fetch('/api/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: userMessage
-                })
-            });
-
-            const data = await response.json();
-            
-            if (data.error) {
-                throw new Error(data.error);
-            }
-
-            if (data.message) {
-                this.addMessageToChat('bot', data.message);
-            } else {
-                throw new Error('Invalid response format');
-            }
-        } catch (error) {
-            console.error('Error details:', error);
-            this.addMessageToChat('bot', `Error: ${error.message}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-    }
 
-    addMessageToChat(role, content) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `chat-message ${role}-message`;
-        messageDiv.textContent = content;
-        this.messageContainer.appendChild(messageDiv);
-        this.messageContainer.scrollTop = this.messageContainer.scrollHeight;
+        return await response.json();
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
     }
 }
-
-// Initialize the chatbot when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-    new ChatBot();
-}); 
