@@ -1,14 +1,15 @@
 /* General Styling */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: black url('../src/img/starsfluid.png') no-repeat center center fixed;
+    font-family: 'Courier New', monospace; /* Terminal-style font */
+    background: linear-gradient(to bottom, #001a33, #000) no-repeat center center fixed;
     background-size: cover;
-    color: white;
+    color: #00bfff; /* Light blue text color */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
 }
 
 /* Layout: Chatbox, Center Button, Console */
@@ -18,57 +19,84 @@ body {
     height: 100%;
     justify-content: space-between;
     align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Add flicker animation to the console and chatbox */
+.chatbox, .console {
+    animation: flicker 3s infinite;
+}
+
+/* Keyframes for flickering effect */
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+    }
+    20%, 24%, 55% {
+        opacity: 0.95;
+    }
+    22%, 53% {
+        opacity: 0.9;
+    }
 }
 
 /* Left Chatbox */
 .chatbox {
-    width: 25%;
+    width: 30%; /* Make it wider */
     height: 90%;
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid #555;
+    background: rgba(0, 26, 51, 0.8); /* Slightly transparent dark blue */
+    border: 2px solid #00bfff; /* Light blue border */
     border-radius: 10px;
-    padding: 10px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 0 0 20px #00bfff; /* Glowing effect */
 }
 
 .chatbox h2 {
     text-align: center;
+    color: #00bfff;
+    text-shadow: 0 0 10px #00bfff; /* Glow effect */
 }
 
 .chatbox .messages {
     flex-grow: 1;
     margin-bottom: 10px;
     overflow-y: auto;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.6); /* Darker background inside */
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #555;
+    border: 1px solid #00bfff;
 }
 
 .chatbox textarea {
     width: 100%;
     height: 60px;
     margin-bottom: 5px;
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
-    border: 1px solid #555;
-    background: #222;
-    color: white;
+    border: 1px solid #00bfff;
+    background: #001a33;
+    color: #00bfff;
+    font-family: 'Courier New', monospace;
 }
 
 .chatbox button {
     padding: 10px;
-    background-color: #007BFF;
+    background-color: #0055cc;
     color: white;
-    border: none;
+    border: 1px solid #00bfff;
     border-radius: 5px;
     cursor: pointer;
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 0 10px #00bfff; /* Glow effect */
 }
 
 .chatbox button:hover {
-    background-color: #0056b3;
+    background-color: #0044aa;
+    box-shadow: 0 0 15px #00bfff; /* Stronger glow on hover */
 }
 
 /* Center Button */
@@ -83,32 +111,45 @@ body {
     margin-bottom: 20px;
     padding: 15px 30px;
     font-size: 18px;
-    background-color: #28a745;
+    background-color: #0055cc;
     color: white;
-    border: none;
+    border: 2px solid #00bfff;
     border-radius: 5px;
     cursor: pointer;
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 0 15px #00bfff; /* Glow effect */
 }
 
 .center #enterButton:hover {
-    background-color: #218838;
+    background-color: #0044aa;
+    box-shadow: 0 0 25px #00bfff; /* Stronger glow on hover */
 }
 
 /* Right Console */
 .console {
-    width: 25%;
+    width: 30%; /* Make it wider */
     height: 90%;
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid #555;
+    background: rgba(0, 26, 51, 0.8); /* Slightly transparent dark blue */
+    border: 2px solid #00bfff; /* Light blue border */
     border-radius: 10px;
-    padding: 10px;
+    padding: 15px;
     overflow-y: auto;
+    box-shadow: 0 0 20px #00bfff; /* Glowing effect */
 }
 
 .console h2 {
     text-align: center;
+    color: #00bfff;
+    text-shadow: 0 0 10px #00bfff; /* Glow effect */
 }
 
-.console p {
+.console p,
+.console ul {
+    color: #00bfff;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 5px #00bfff;
+}
+
+.console ul li {
     margin-bottom: 10px;
 }
