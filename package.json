@@ -13,6 +13,7 @@
     "serve": "latest"
   },
   "dependencies": {
+    "anthropic": "^0.0.0",
     "axios": "^1.7.9"
   }
 }

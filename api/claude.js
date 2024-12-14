@@ -1,49 +1,34 @@
-import axios from 'axios';
+import { Client } from 'anthropic';
 
 export default async function handler(req, res) {
-    // Ensure the HTTP method is POST
+    // Allow only POST requests
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed. Use POST instead.' });
+        return res.status(405).json({ error: 'Method not allowed. Use POST requests.' });
     }
 
-    // Extract user message from the request body
-    const { message } = req.body;
+    const { message } = req.body; // Extract the user's message from the request body
+
     if (!message) {
         return res.status(400).json({ error: 'Message is required.' });
     }
 
     try {
-        // Prepare the API request payload
-        const payload = {
-            model: 'claude-3-5-sonnet-20241022', // Specify the Claude model
-            messages: [
-                {
-                    role: 'user',
-                    content: message, // User input message
-                },
-            ],
-            max_tokens: 1024, // Define the maximum response length
-            temperature: 0.7, // Adjust creativity of responses
-        };
+        // Initialize the Anthropic client with the API key
+        const client = new Client(process.env.ANTHROPIC_API_KEY);
 
-        // Make the API request to Anthropic
-        const response = await axios.post(
-            'https://api.anthropic.com/v1/messages',
-            payload,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-api-key': process.env.ANTHROPIC_API_KEY, // Use your secure API key from environment variables
-                },
-            }
-        );
+        // Call the Claude API
+        const response = await client.complete({
+            model: 'claude-3-5-sonnet-20241022', // The Claude model to use
+            prompt: `Human: ${message}\n\nAssistant:`, // Add your message to the prompt
+            maxTokensToSample: 300, // Set the maximum token limit for the response
+            temperature: 0.7, // Control the creativity of Claude's response
+        });
 
-        // Extract Claude's response content and send it back to the frontend
-        const reply = response.data.completion;
-        res.status(200).json({ reply });
+        // Return the response from Claude to the frontend
+        res.status(200).json({ reply: response.completion });
     } catch (error) {
-        // Log detailed errors for debugging purposes
-        console.error('Error communicating with Anthropic API:', error.response?.data || error.message);
-        res.status(500).json({ error: 'Failed to communicate with Claude AI. Check the server logs for details.' });
+        // Log any errors and send a 500 response
+        console.error('Anthropic API Error:', error.message);
+        res.status(500).json({ error: 'Failed to communicate with Claude AI.' });
     }
 }
