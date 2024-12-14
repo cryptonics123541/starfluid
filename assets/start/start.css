@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background: black url('src/img/starsfluid.png') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.console {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
