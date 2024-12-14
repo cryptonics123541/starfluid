@@ -16,13 +16,13 @@ const SpaceConsole = () => {
                 <div className="fixed inset-0 bg-black z-50 animate-[zoomOut_2s_ease-in-out]" />
             )}
             
-            <div className="relative z-10 min-h-screen backdrop-blur-sm p-8">
+            <div className="relative z-10 min-h-screen backdrop-blur-[2px] p-8">
                 <div className="max-w-2xl mx-auto space-y-8">
                     <header className="flex items-center space-x-2 text-xl text-blue-400">
                         <span className="text-xl">CRYPTONICS TERMINAL v1.0.1</span>
                     </header>
 
-                    <div className="border border-blue-900/50 p-4 bg-black/30 backdrop-blur">
+                    <div className="border border-blue-900/50 p-4 bg-black/20 backdrop-blur-sm">
                         <div className="flex items-center space-x-2 text-green-400 mb-4">
                             <span>SYSTEM STATUS: ONLINE</span>
                         </div>
@@ -52,7 +52,7 @@ const SpaceConsole = () => {
                         INITIALIZE STARFLUID SIMULATION
                     </button>
 
-                    <div className="text-xs text-blue-600 mt-8">
+                    <div className="text-xs text-blue-400/90 mt-8">
                         <p>{'>'} SYSTEM METRICS:</p>
                         <p className="ml-4">Memory: 256TB Quantum Buffer</p>
                         <p className="ml-4">Status: All Systems Nominal</p>

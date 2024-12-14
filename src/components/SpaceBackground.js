@@ -7,23 +7,23 @@ const SpaceBackground = () => {
         for (let i = 0; i < 500; i++) {
             // Added color variations for stars
             const colors = [
-                'rgba(255, 255, 255, VAR)', // White
-                'rgba(173, 216, 230, VAR)', // Light blue
-                'rgba(255, 223, 186, VAR)', // Warm white
-                'rgba(176, 224, 230, VAR)', // Powder blue
-                'rgba(255, 255, 224, VAR)'  // Light yellow
+                'rgba(255, 255, 255, VAR)',  // Bright white
+                'rgba(200, 230, 255, VAR)',  // Bright blue
+                'rgba(255, 240, 220, VAR)',  // Bright warm
+                'rgba(220, 255, 255, VAR)',  // Bright cyan
+                'rgba(255, 255, 200, VAR)'   // Bright yellow
             ];
             
             const color = colors[Math.floor(Math.random() * colors.length)]
-                .replace('VAR', (Math.random() * 0.5 + 0.5)); // Higher opacity: 0.5-1.0
+                .replace('VAR', (Math.random() * 0.3 + 0.7)); // Higher opacity: 0.7-1.0
 
             initialStars.push({
                 x: Math.random() * 100,
                 y: Math.random() * 100,
                 // Increased size variation
-                size: Math.random() * 3 + 1.5,
+                size: Math.random() * 4 + 2, // Bigger stars: 2-6px
                 speed: Math.random() * 0.15 + 0.05,
-                opacity: Math.random() * 0.3 + 0.7, // Higher base opacity
+                opacity: Math.random() * 0.2 + 0.8, // Much higher opacity: 0.8-1.0
                 layer: Math.floor(Math.random() * 3),
                 color: color,
                 // Add subtle twinkling effect
@@ -67,18 +67,18 @@ const SpaceBackground = () => {
                         transition: 'left 50ms linear',
                         zIndex: star.layer,
                         // Enhanced glow effect
-                        boxShadow: `0 0 ${star.size * 2}px ${star.color.replace('VAR', '0.8')}`
+                        boxShadow: `0 0 ${star.size * 3}px ${star.color.replace('VAR', '1')}` // Stronger glow
                     }}
                 />
             ))}
             
             {/* Enhanced nebula effects */}
             <div 
-                className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-purple-900/10"
+                className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-purple-900/20"
                 style={{ mixBlendMode: 'screen' }}
             />
             <div 
-                className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-blue-900/10"
+                className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-blue-900/20"
                 style={{ mixBlendMode: 'screen', transform: 'translate(30%, 20%)' }}
             />
         </div>
