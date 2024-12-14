@@ -1,11 +1,13 @@
 body {
     margin: 0;
-    height: 100vh;
-    background: black url('src/img/starsfluid.png') no-repeat center center;
+    font-family: Arial, sans-serif;
+    background: black url('../src/img/starsfluid.png') no-repeat center center fixed;
     background-size: cover;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 
 .console {
@@ -13,8 +15,6 @@ body {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    color: white;
-    font-family: Arial, sans-serif;
 }
 
 button {
@@ -26,4 +26,8 @@ button {
     color: white;
     border: none;
     border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
