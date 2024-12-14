@@ -3,6 +3,7 @@ const SpaceConsole = () => {
     
     const handleStartSimulation = () => {
         setIsTransitioning(true);
+        document.body.classList.add('zooming');
         setTimeout(() => {
             window.location.href = 'fluid.html';
         }, 2000);
@@ -13,7 +14,7 @@ const SpaceConsole = () => {
             <SpaceBackground />
             
             {isTransitioning && (
-                <div className="fixed inset-0 bg-black z-50 animate-[zoomOut_2s_ease-in-out]" />
+                <div className="fixed inset-0 bg-black/50 z-50 animate-[zoomIn_2s_ease-in-out]" />
             )}
             
             <div className="relative z-10 min-h-screen backdrop-blur-[2px] p-8">

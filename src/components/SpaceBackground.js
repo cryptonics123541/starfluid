@@ -55,7 +55,7 @@ const SpaceBackground = () => {
             {stars.map((star, i) => (
                 <div
                     key={i}
-                    className="absolute rounded-full"
+                    className="absolute rounded-full star"
                     style={{
                         left: `${star.x}%`,
                         top: `${star.y}%`,
