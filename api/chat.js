@@ -9,7 +9,7 @@ export async function POST(request) {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
+        'anthropic-version': '2024-02-15-preview'
       },
       body: JSON.stringify({
         model: 'claude-3-opus-20240229',
@@ -17,13 +17,23 @@ export async function POST(request) {
         messages: [{
           role: 'user',
           content: message
-        }]
+        }],
+        temperature: 0.7
       })
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Anthropic API Error:', errorData);
+      throw new Error(errorData.error?.message || 'API request failed');
+    }
 
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to process request' }, { status: 500 });
+    console.error('Server Error:', error);
+    return NextResponse.json({ 
+      error: 'Failed to process request: ' + error.message 
+    }, { status: 500 });
   }
 } 
