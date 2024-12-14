@@ -23,7 +23,6 @@ class ChatBot {
         this.input.value = '';
 
         try {
-            console.log('Sending message to API...');
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: {
@@ -34,18 +33,21 @@ class ChatBot {
                 })
             });
 
-            console.log('Response received:', response.status);
-            const data = await response.json();
-            console.log('Data:', data);
-
-            if (data.error) {
-                throw new Error(data.error);
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to get response');
             }
+
+            const data = await response.json();
+            if (!data.content || !data.content[0] || !data.content[0].text) {
+                throw new Error('Invalid response format');
+            }
+            
             const botResponse = data.content[0].text;
             this.addMessageToChat('bot', botResponse);
         } catch (error) {
             console.error('Error details:', error);
-            this.addMessageToChat('bot', 'Sorry, I encountered an error: ' + error.message);
+            this.addMessageToChat('bot', `Error: ${error.message}. Please try again.`);
         }
     }
 

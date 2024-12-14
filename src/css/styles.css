@@ -5,14 +5,14 @@
     transform: translateY(-50%);
     width: 400px;
     height: 600px;
-    background: rgba(0, 0, 0, 0.95);
-    border: 1px solid #00ff9d;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgb(48, 242, 242);
     border-radius: 4px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     font-family: 'Courier New', monospace;
-    color: #00ff9d;
+    color: rgb(48, 242, 242);
     z-index: 1000;
 }
 
@@ -21,7 +21,7 @@
     overflow-y: auto;
     padding: 15px;
     scrollbar-width: thin;
-    scrollbar-color: #00ff9d rgba(0, 0, 0, 0.95);
+    scrollbar-color: rgb(48, 242, 242) rgba(0, 0, 0, 0.3);
 }
 
 .chat-message {
@@ -33,38 +33,38 @@
 }
 
 .user-message {
-    background: rgba(0, 255, 157, 0.1);
+    background: rgba(48, 242, 242, 0.1);
     margin-left: auto;
-    border: 1px solid rgba(0, 255, 157, 0.3);
+    border: 1px solid rgba(48, 242, 242, 0.3);
 }
 
 .bot-message {
-    background: rgba(0, 255, 157, 0.05);
+    background: rgba(48, 242, 242, 0.05);
     margin-right: auto;
-    border: 1px solid rgba(0, 255, 157, 0.3);
+    border: 1px solid rgba(48, 242, 242, 0.3);
 }
 
 .chat-input-container {
     padding: 15px;
-    border-top: 1px solid #00ff9d;
+    border-top: 1px solid rgb(48, 242, 242);
     display: flex;
     gap: 10px;
 }
 
 #chatInput {
     flex-grow: 1;
-    background: rgba(0, 0, 0, 0.8);
-    border: 1px solid #00ff9d;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgb(48, 242, 242);
     border-radius: 4px;
     padding: 8px;
-    color: #00ff9d;
+    color: rgb(48, 242, 242);
     font-family: 'Courier New', monospace;
 }
 
 #sendMessage {
-    background: rgba(0, 255, 157, 0.1);
-    border: 1px solid #00ff9d;
-    color: #00ff9d;
+    background: rgba(48, 242, 242, 0.1);
+    border: 1px solid rgb(48, 242, 242);
+    color: rgb(48, 242, 242);
     padding: 8px 15px;
     border-radius: 4px;
     cursor: pointer;
@@ -73,7 +73,7 @@
 }
 
 #sendMessage:hover {
-    background: rgba(0, 255, 157, 0.2);
+    background: rgba(48, 242, 242, 0.2);
 }
 
 /* Scrollbar styling */
@@ -82,10 +82,10 @@
 }
 
 .chat-messages::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-    background: #00ff9d;
+    background: rgb(48, 242, 242);
     border-radius: 5px;
 } 
