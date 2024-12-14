@@ -7,10 +7,30 @@
     <link rel="stylesheet" href="assets/start/start.css">
 </head>
 <body>
-    <div class="console">
-        <h1>Welcome to Starfluid</h1>
-        <p>Interact with the stars and explore the simulation.</p>
-        <button onclick="startSimulation()">Enter Simulation</button>
+    <div class="layout">
+        <!-- Left Chatbox -->
+        <div class="chatbox">
+            <h2>Chat with Claude AI</h2>
+            <div class="messages" id="chatMessages"></div>
+            <textarea id="chatInput" placeholder="Type your message here..."></textarea>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+
+        <!-- Center with the Button -->
+        <div class="center">
+            <button id="enterButton" onclick="startSimulation()">Enter Simulation</button>
+        </div>
+
+        <!-- Right Console Screen -->
+        <div class="console">
+            <h2>Console</h2>
+            <p>Welcome to Starfluid! Explore the stars and interact with the simulation.</p>
+            <ul>
+                <li>Press <b>Spacebar</b> to pause the simulation.</li>
+                <li>Use your mouse to interact with the particles.</li>
+                <li>Adjust settings in the simulation for a customized experience.</li>
+            </ul>
+        </div>
     </div>
     <script src="assets/start/start.js"></script>
 </body>

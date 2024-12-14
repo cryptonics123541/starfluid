@@ -1,3 +1,4 @@
+/* General Styling */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -10,24 +11,104 @@ body {
     height: 100vh;
 }
 
-.console {
+/* Layout: Chatbox, Center Button, Console */
+.layout {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Left Chatbox */
+.chatbox {
+    width: 25%;
+    height: 90%;
     background: rgba(0, 0, 0, 0.8);
-    padding: 20px;
+    border: 2px solid #555;
     border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chatbox h2 {
     text-align: center;
 }
 
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+.chatbox .messages {
+    flex-grow: 1;
+    margin-bottom: 10px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #555;
+}
+
+.chatbox textarea {
+    width: 100%;
+    height: 60px;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #555;
+    background: #222;
+    color: white;
+}
+
+.chatbox button {
+    padding: 10px;
     background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
 }
 
-button:hover {
+.chatbox button:hover {
     background-color: #0056b3;
+}
+
+/* Center Button */
+.center {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.center #enterButton {
+    margin-bottom: 20px;
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.center #enterButton:hover {
+    background-color: #218838;
+}
+
+/* Right Console */
+.console {
+    width: 25%;
+    height: 90%;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #555;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.console h2 {
+    text-align: center;
+}
+
+.console p {
+    margin-bottom: 10px;
 }
