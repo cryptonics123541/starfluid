@@ -4,19 +4,13 @@
   "version": "1.0.0",
   "author": "Johann Troendle",
   "scripts": {
-    "build": "next build",
-    "start": "next start",
-    "dev": "next dev"
+    "build": "echo 'No build step'",
+    "start": "npx serve public",
+    "dev": "gulp serve"
   },
   "devDependencies": {
-    "@types/node": "^18.0.0",
     "gulp": "^4.0.2",
     "gulp-connect": "^5.7.0",
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "next": "^14.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "serve": "^14.2.1"
   }
 }
