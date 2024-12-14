@@ -14,19 +14,19 @@ export default async function handler(req, res) {
     }
 
     try {
-        console.log('Sending request to Anthropic API'); // Log before sending request
+        console.log('Sending request to Anthropic API with message:', message); // Log the user input
         const response = await axios.post(
             'https://api.anthropic.com/v1/complete',
             {
                 prompt: `Human: ${message}\n\nAssistant:`,
-                model: 'claude-v1', // Use the correct model name
+                model: 'claude-v1', // Check if this model is correct
                 max_tokens_to_sample: 300,
                 temperature: 0.7,
             },
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'x-api-key': process.env.ANTHROPIC_API_KEY, // Log API key availability
+                    'x-api-key': process.env.ANTHROPIC_API_KEY, // API key from environment
                 },
             }
         );
