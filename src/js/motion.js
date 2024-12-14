@@ -54,7 +54,7 @@
       if (this.uniforms && this.uniforms.ratio) {
           this.uniforms.ratio.value = ctx.width / ctx.height || 1.0;
       }
-}
+},
 
     mousemove: function(e) {
       if (this.ctx.paused) {

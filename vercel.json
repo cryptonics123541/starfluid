@@ -3,25 +3,20 @@
     "builds": [
       { "src": "src/**", "use": "@vercel/static" }
     ],
-    "headers": [
-      {
-        "source": "/(.*)",
-        "headers": [
-          { "key": "Access-Control-Allow-Origin", "value": "*" },
-          { "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,POST" },
-          { "key": "Access-Control-Allow-Headers", "value": "*" },
-          { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
-          { "key": "Cross-Origin-Embedder-Policy", "value": "require-corp" }
-        ]
-      }
-    ],
     "routes": [
-      { "handle": "filesystem" },
       { 
-        "src": "/src/(.*)", 
-        "dest": "/src/$1",
-        "continue": true
+        "src": "/src/(.*\\.(js|png|html|css))",
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, OPTIONS",
+          "Access-Control-Allow-Headers": "*",
+          "Cache-Control": "public, max-age=0, must-revalidate"
+        },
+        "dest": "/src/$1"
       },
-      { "src": "/(.*)", "dest": "/src/$1" }
+      { 
+        "src": "/(.*)",
+        "dest": "/src/$1"
+      }
     ]
-  }
+}
