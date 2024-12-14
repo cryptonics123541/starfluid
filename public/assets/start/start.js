@@ -1,53 +1,40 @@
-// Route to the simulation
-function startSimulation() {
-    window.location.href = '/src/index.html'; // Adjust the path if necessary
-}
-
-// Chatbox functionality
-async function sendMessage() {
-    const input = document.getElementById('chatInput');
-    const messages = document.getElementById('chatMessages');
-    const userMessage = input.value;
-
-    if (!userMessage.trim()) return; // Ignore empty messages
-
-    // Display user's message
-    const userMessageDiv = document.createElement('div');
-    userMessageDiv.textContent = `You: ${userMessage}`;
-    userMessageDiv.style.color = '#00FF00'; // Green for user's messages
-    messages.appendChild(userMessageDiv);
-
-    input.value = ''; // Clear the input field
-
-    try {
-        // Send message to the Vercel backend
-        const response = await fetch('/api/claude', {
+document.addEventListener('DOMContentLoaded', () => {
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatOutput = document.getElementById('chat-output');
+  
+    if (chatForm && chatInput && chatOutput) {
+      chatForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const userMessage = chatInput.value.trim();
+  
+        if (!userMessage) {
+          return;
+        }
+  
+        chatOutput.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+        chatInput.value = '';
+  
+        try {
+          const response = await fetch('/api/claude', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+              'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ message: userMessage }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch AI response');
+            body: JSON.stringify({ prompt: userMessage }),
+          });
+  
+          if (!response.ok) {
+            throw new Error('API request failed');
+          }
+  
+          const data = await response.json();
+          chatOutput.innerHTML += `<p><strong>Claude:</strong> ${data.completion}</p>`;
+        } catch (error) {
+          chatOutput.innerHTML += `<p><strong>Error:</strong> Unable to get a response.</p>`;
+          console.error(error);
         }
-
-        const data = await response.json();
-
-        // Display Claude AI's response
-        const aiMessageDiv = document.createElement('div');
-        aiMessageDiv.textContent = `Claude AI: ${data.reply}`;
-        aiMessageDiv.style.color = '#FFA500'; // Orange for AI's messages
-        messages.appendChild(aiMessageDiv);
-    } catch (error) {
-        console.error('Error:', error);
-        const errorMessageDiv = document.createElement('div');
-        errorMessageDiv.textContent = 'Error: Unable to communicate with Claude AI.';
-        errorMessageDiv.style.color = 'red';
-        messages.appendChild(errorMessageDiv);
+      });
     }
-
-    // Scroll to the latest message
-    messages.scrollTop = messages.scrollHeight;
-}
+  });
+  

@@ -1,7 +1,8 @@
 {
-    "rewrites": [
-      { "source": "/", "destination": "/start.html" },
-      { "source": "/simulation", "destination": "/src/index.html" }
-    ]
-  }
-  
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ]
+}
