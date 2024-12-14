@@ -1,15 +1,15 @@
 @keyframes zoomIn {
     0% {
-        transform: scale(1);
+        transform: scale(1) translate(0, 0);
     }
     100% {
-        transform: scale(3);
+        transform: scale(8) translate(0, -50%);
     }
 }
 
 /* Add a class for zooming stars */
 .zooming .star {
-    animation: zoomStars 2.5s ease-in-out forwards;
+    animation: zoomStars 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes zoomStars {
@@ -17,8 +17,11 @@
         transform: scale(1) translate(0, 0);
         opacity: 1;
     }
+    50% {
+        opacity: 1;
+    }
     100% {
-        transform: scale(4) translate(0, -50%);
+        transform: scale(8) translate(0, -50%);
         opacity: 1;
     }
 }

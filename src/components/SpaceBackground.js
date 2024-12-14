@@ -58,11 +58,10 @@ const SpaceBackground = () => {
                         height: `${star.size}px`,
                         opacity: star.opacity,
                         backgroundColor: star.color,
-                        filter: `blur(${star.layer === 0 ? '0px' : '0.5px'})`,
                         transition: 'left 50ms linear',
                         zIndex: star.layer,
                         boxShadow: `0 0 ${star.size * 3}px ${star.color}`,
-                        willChange: 'transform' // Optimize for animation
+                        willChange: 'transform'
                     }}
                 />
             ))}
