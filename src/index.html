@@ -15,24 +15,15 @@
 </head>
 <body>
     <div id="root"></div>
-    <div class="chat-container">
-        <div class="chat-messages" id="chatMessages"></div>
-        <div class="chat-input-container">
-            <input type="text" id="chatInput" placeholder="Ask something..." />
-            <button id="sendMessage">Send</button>
-        </div>
-    </div>
 
     <!-- Add your React components -->
-    <script type="text/babel" src="src/components/SpaceBackground.js"></script>
-    <script type="text/babel" src="src/components/SpaceConsole.js"></script>
+    <script type="text/babel" src="components/SpaceBackground.js"></script>
+    <script type="text/babel" src="components/SpaceConsole.js"></script>
     <script type="text/babel">
         ReactDOM.render(
             <SpaceConsole />,
             document.getElementById('root')
         );
     </script>
-    <!-- Add the chat functionality -->
-    <script src="js/chat.js"></script>
 </body>
 </html>

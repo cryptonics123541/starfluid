@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { SpaceBackground } from './SpaceBackground';
-
-export default function SpaceConsole() {
-    const [messages, setMessages] = useState([]);
-    const [inputMessage, setInputMessage] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [isTransitioning, setIsTransitioning] = useState(false);
+// src/components/SpaceConsole.js
+const SpaceConsole = () => {
+    const [messages, setMessages] = React.useState([]);
+    const [inputMessage, setInputMessage] = React.useState('');
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [isTransitioning, setIsTransitioning] = React.useState(false);
 
     const sendMessage = async () => {
         if (!inputMessage.trim()) return;
@@ -130,4 +128,6 @@ export default function SpaceConsole() {
             </div>
         </div>
     );
-}
+};
+
+window.SpaceConsole = SpaceConsole;
