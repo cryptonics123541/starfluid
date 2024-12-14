@@ -9,7 +9,6 @@
 
     initialize: function(ctx) {
       this.ctx = ctx;
-
       var gl = ctx.gl;
 
       this.uniforms = {
@@ -17,7 +16,7 @@
         'lastPoint': { type: '2f', value: null},
         'dye': { type: '1f', value: 0.0},
         'velocity': { type: '2f', value: [0,0]},
-        'ratio': { type: '1f', value: ctx.aspect}
+        'ratio': { type: '1f', value: ctx.width / ctx.height || 1.0}  // Fallback to 1.0 if calculation fails
       };
 
       this.motion = new RTT(gl, {
@@ -52,8 +51,10 @@
 
     resize: function(ctx) {
       this.ctx = ctx;
-      this.uniforms.ratio.value = ctx.aspect;
-    },
+      if (this.uniforms && this.uniforms.ratio) {
+          this.uniforms.ratio.value = ctx.width / ctx.height || 1.0;
+      }
+}
 
     mousemove: function(e) {
       if (this.ctx.paused) {
