@@ -9,42 +9,27 @@
         body {
             margin: 0;
             overflow: hidden;
-            background: radial-gradient(ellipse at center, #000000 40%, #0a0a20 100%);
-            color: #00ffff;
-            font-family: 'Courier New', monospace;
+            background: #000; /* Black background for black hole */
         }
         model-viewer {
             width: 100vw;
             height: 100vh;
         }
-        .credits {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            color: #00ffff;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.9em;
-        }
     </style>
 </head>
 <body>
-    <!-- Black Hole Model -->
     <model-viewer
         src="/models/black_hole.glb"
         camera-controls
         auto-rotate
-        camera-orbit="0deg 75deg 15m"
-        min-camera-orbit="auto auto 10m"
-        max-camera-orbit="auto auto 30m"
+        camera-orbit="0deg 90deg 10m"
+        min-camera-orbit="auto auto 5m"
+        max-camera-orbit="auto auto 50m"
         environment-image="neutral"
         shadow-intensity="1"
-        exposure="1.2"
+        exposure="1.5"
         shadow-softness="1"
         interaction-prompt="none">
     </model-viewer>
-
-    <div class="credits">> Model: Black Hole Simulation</div>
 </body>
 </html>

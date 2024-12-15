@@ -6,61 +6,25 @@
     <title>Sol-1 Solar System</title>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
     <style>
-        /* General Body Styling */
         body {
             margin: 0;
-            overflow: hidden; /* Prevent scrollbars */
+            overflow: hidden;
             background: #000;
-            font-family: 'Courier New', monospace;
         }
-
-        /* Starry Background */
-        body::before, body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
-            animation: moveStars 100s linear infinite;
-            z-index: -1;
-            opacity: 0.8;
-        }
-
-        body::after {
-            animation-delay: 50s; /* Offset for parallax effect */
-            opacity: 0.6;
-        }
-
-        /* Moving Stars Animation */
-        @keyframes moveStars {
-            from {
-                transform: translateY(0);
-            }
-            to {
-                transform: translateY(-100%);
-            }
-        }
-
-        /* Fullscreen Model Viewer */
         model-viewer {
             width: 100vw;
             height: 100vh;
-            z-index: 1; /* Place above background */
         }
     </style>
 </head>
 <body>
-    <!-- Solar System Model -->
     <model-viewer
         src="/models/solar_system_animation.glb"
         camera-controls
         auto-rotate
-        animation-name="auto"
-        camera-orbit="0deg 75deg 20m"
+        camera-orbit="0deg 75deg 15m"
         min-camera-orbit="auto auto 10m"
-        max-camera-orbit="auto auto 50m"
+        max-camera-orbit="auto auto 30m"
         environment-image="neutral"
         shadow-intensity="1"
         exposure="1.0"
