@@ -38,23 +38,29 @@
 
     <!-- 3D Model Viewer Modal -->
     <div id="schematicViewer" class="schematic-modal">
-      <div class="schematic-content">
-          <span class="close-button" onclick="toggleSchematicViewer()">&times;</span>
-          <div id="model-container"></div>
-          <div class="model-credits">
-              > Model: D.S.S. Harbinger battle cruiser by Comrade1280
-          </div>
-      </div>
-  </div>
+        <div class="schematic-content">
+            <span class="close-button" onclick="toggleSchematicViewer()">&times;</span>
+            <div id="model-container">
+                <div id="loading-indicator">Loading model...</div>
+            </div>
+            <div class="model-credits">
+                > Model: D.S.S. Harbinger battle cruiser by Comrade1280
+            </div>
+        </div>
+    </div>
 
-  <!-- Scripts should be placed here, right before the closing body tag -->
-  <script src="stars.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r156/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.156.0/examples/jsm/loaders/GLTFLoader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.156.0/examples/jsm/controls/OrbitControls.js"></script>
-  <script src="viewer.js"></script>
-  <script>
-      async function sendMessage() {
+    <!-- Put all script tags here, right before closing body tag -->
+    <script src="stars.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.156.1/three.min.js"></script>
+    <script type="text/javascript">
+        // This is a workaround for the GLTFLoader and OrbitControls
+        window.THREE = THREE;
+    </script>
+    <script src="https://unpkg.com/three@0.156.1/examples/jsm/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/three@0.156.1/examples/jsm/controls/OrbitControls.js"></script>
+    <script src="viewer.js"></script>
+    <script>
+        async function sendMessage() {
             const userInput = document.getElementById('userInput');
             const chatContainer = document.getElementById('chat');
             
