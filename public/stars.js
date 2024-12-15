@@ -3,43 +3,29 @@ function createStars() {
     starsContainer.id = 'stars-container';
     document.body.prepend(starsContainer);
 
-    // Create more stars for a denser field
-    const numberOfStars = 400;
+    const numberOfStars = 500;
     
     function createStar() {
         const star = document.createElement('div');
         star.className = 'star';
         
-        // Random starting position near the center
-        const startX = (Math.random() - 0.5) * 100;
-        const startY = (Math.random() - 0.5) * 100;
+        // Random position across entire viewport
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+        const z = Math.random() * 1500 - 750; // Random depth, both forward and behind
         
-        // Calculate end position (spreading outward)
-        const angle = Math.atan2(startY, startX);
-        const distance = Math.sqrt(startX * startX + startY * startY);
-        const multiplier = (window.innerWidth / 50) * (1 + Math.random());
-        const endX = Math.cos(angle) * multiplier;
-        const endY = Math.sin(angle) * multiplier;
+        // Set initial position
+        star.style.left = `${x}px`;
+        star.style.top = `${y}px`;
         
-        // Set custom properties for the animation
-        star.style.setProperty('--x-start', `${startX}px`);
-        star.style.setProperty('--y-start', `${startY}px`);
-        star.style.setProperty('--x-end', `${endX}px`);
-        star.style.setProperty('--y-end', `${endY}px`);
-        star.style.setProperty('--final-opacity', Math.random() * 0.8 + 0.2);
-
-        // Random size for depth effect
-        const size = Math.random() * 3 + 1;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
+        // Random size for twinkling effect
+        const baseSize = 0.5 + Math.random() * 0.5;
+        star.style.transform = `translate3d(0, 0, ${z}px) scale(${baseSize})`;
         
-        // Set initial position to center of screen
-        star.style.left = '50%';
-        star.style.top = '50%';
-        
-        // Animation properties
-        const duration = Math.random() * 3 + 2;
-        star.style.animation = `moveStar ${duration}s linear infinite`;
+        // Twinkling animation
+        const duration = 2 + Math.random() * 3;
+        const delay = Math.random() * 2;
+        star.style.animation = `twinkle ${duration}s infinite ${delay}s`;
         
         return star;
     }
@@ -50,14 +36,28 @@ function createStars() {
         starsContainer.appendChild(star);
     }
 
-    // Periodically remove and replace stars to prevent memory issues
-    setInterval(() => {
-        const stars = starsContainer.getElementsByClassName('star');
-        if (stars.length > numberOfStars) {
-            starsContainer.removeChild(stars[0]);
+    // Add twinkling animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
         }
-        starsContainer.appendChild(createStar());
-    }, 100);
+    `;
+    document.head.appendChild(style);
+
+    // Parallax effect on mouse move
+    document.addEventListener('mousemove', (e) => {
+        const moveX = (e.clientX - window.innerWidth / 2) * 0.005;
+        const moveY = (e.clientY - window.innerHeight / 2) * 0.005;
+        
+        const stars = document.getElementsByClassName('star');
+        Array.from(stars).forEach(star => {
+            const z = parseFloat(star.style.transform.match(/translate3d\(.*?, .*?, (.*?)px\)/)[1]);
+            const movement = (z + 750) / 1500; // Normalized depth factor
+            star.style.transform = `translate3d(${moveX * movement}px, ${moveY * movement}px, ${z}px)`;
+        });
+    });
 }
 
 // Handle window resize
