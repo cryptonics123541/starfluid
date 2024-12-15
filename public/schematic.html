@@ -14,7 +14,7 @@
         }
         model-viewer {
             width: 100vw;
-            height: 50vh; /* Two models take up equal halves */
+            height: 50vh;
             background-color: #0a1a4d;
         }
         .model-credits {
@@ -34,6 +34,7 @@
 <body>
     <!-- First model: Harbinger ship -->
     <model-viewer
+        id="harbinger-model"
         src="/models/harbinger.glb"
         camera-controls
         auto-rotate
@@ -43,25 +44,24 @@
         exposure="1.5"
         shadow-softness="1"
         camera-target="0m 0m 0m"
-        interaction-prompt="none"
-    ></model-viewer>
+        interaction-prompt="none">
+    </model-viewer>
 
-    <!-- Second model: Solar system animation -->
+    <!-- Second model: Solar system -->
     <model-viewer
-    id="solar-system"
-    src="/models/solar_system_animation.glb"
-    camera-controls
-    auto-rotate
-    animation-name="auto"
-    camera-orbit="0deg 75deg 10m"
-    environment-image="neutral"
-    shadow-intensity="1"
-    exposure="1.0"
-    shadow-softness="1"
-    camera-target="0m 0m 0m"
-    interaction-prompt="none">
-</model-viewer>
-
+        id="solar-system-model"
+        src="/models/solar_system_animation.glb"
+        camera-controls
+        auto-rotate
+        animation-name="auto"
+        camera-orbit="0deg 75deg 10m"
+        environment-image="neutral"
+        shadow-intensity="1"
+        exposure="1.0"
+        shadow-softness="1"
+        camera-target="0m 0m 0m"
+        interaction-prompt="none">
+    </model-viewer>
 
     <div class="model-credits">
         > Model: D.S.S. Harbinger battle cruiser by Comrade1280 <br>
