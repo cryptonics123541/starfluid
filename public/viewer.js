@@ -40,7 +40,7 @@ async function initViewer() {
         lights.forEach(light => scene.add(light));
 
         // Setup controls
-        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
         controls.screenSpacePanning = true;
@@ -50,7 +50,7 @@ async function initViewer() {
 
         // Load model
         console.log('Loading model...');
-        const loader = new THREE.GLTFLoader();
+        const loader = new GLTFLoader();
         
         const gltf = await loader.loadAsync('/models/harbinger.glb');
         console.log('Model loaded:', gltf);
