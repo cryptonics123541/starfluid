@@ -48,7 +48,7 @@ body {
     padding: 20px;
     background: rgba(0, 0, 51, 0.4);
     overflow-y: auto;
-    margin-bottom: 20px;
+    margin-bottom: 100px; /* Make space for input area */
     backdrop-filter: blur(5px);
 }
 
@@ -59,35 +59,36 @@ body {
 }
 
 textarea {
-    width: calc(100% - 100px);
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
+    width: calc(45% - 120px); /* Account for container padding and send button */
+    height: 60px;
     padding: 12px;
     background: rgba(0, 0, 51, 0.4);
     color: #00ffff;
     border: 1px solid rgba(0, 255, 255, 0.3);
     border-radius: 8px;
     font-family: 'Courier New', monospace;
-    position: absolute;
-    bottom: 0;
-    left: 0;
     resize: none;
-    height: 60px;
+    z-index: 2;
 }
 
 button {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 12px 24px;
+    position: fixed;
+    bottom: 40px;
+    left: calc(45% - 60px); /* Align with textarea */
     height: 60px;
     width: 80px;
+    padding: 12px 24px;
     background: rgba(0, 0, 102, 0.4);
     color: #00ffff;
     border: 1px solid rgba(0, 255, 255, 0.3);
     border-radius: 8px;
     cursor: pointer;
     font-family: 'Courier New', monospace;
+    z-index: 2;
 }
-
 .info-section {
     margin: 20px 0;
     padding: 20px;
