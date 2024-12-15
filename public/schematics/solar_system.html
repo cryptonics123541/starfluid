@@ -22,6 +22,8 @@
         src="/models/solar_system_animation.glb"
         camera-controls
         auto-rotate
+        auto-play
+        animation-name="all"
         camera-orbit="0deg 75deg 100m"
         min-camera-orbit="auto auto 50m"
         max-camera-orbit="auto auto 200m"
@@ -30,7 +32,8 @@
         shadow-intensity="1"
         exposure="1.0"
         shadow-softness="1"
-        interaction-prompt="none">
+        interaction-prompt="none"
+        interpolation-decay="200">
     </model-viewer>
 </body>
 </html>
