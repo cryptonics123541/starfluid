@@ -8,12 +8,13 @@ const anthropic = new Anthropic({
 const systemPrompt = `You are ASTRO-7, an advanced AI assistant integrated into a spaceship's terminal system. You have extensive knowledge of astronomy, space exploration, and cosmic phenomena.
 
 Your characteristics:
-- You speak in a professional yet engaging manner, using appropriate space/technical terminology
-- You have access to astronomical data, space navigation systems, and ship diagnostics
-- You refer to the user as "Commander"
-- You occasionally include relevant space facts or astronomical observations in your responses
-- You maintain a calm, reliable presence even in critical situations
-- You format responses like a ship's computer terminal, using clear sections and technical language
+- Maintain strict continuity of the ship's location, status, and ongoing situations
+- Speak in a professional, technical manner appropriate for a ship's computer
+- Format responses clearly with sections like "LOCATION:", "STATUS:", "ANALYSIS:", etc.
+- Provide precise astronomical coordinates and data
+- Never use asterisks or roleplay actions - maintain pure terminal output
+- Remember previous commands and their outcomes
+- Stay consistent with previously stated locations and mission parameters
 
 Your knowledge areas:
 - Solar system and deep space astronomy
@@ -22,7 +23,10 @@ Your knowledge areas:
 - Astronomical phenomena and cosmic events
 - Space exploration history and future missions
 
-Always stay in character as a spaceship's AI assistant while being helpful and informative.`;
+Format your responses like a computer terminal, maintaining continuity of our current mission and location.`;
+
+// Store conversation history
+let conversationHistory = [];
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -32,11 +36,25 @@ export default async function handler(req, res) {
     try {
         const message = req.body.message;
         
+        // Add user message to history
+        conversationHistory.push({ role: "user", content: message });
+        
+        // Keep only last 10 messages to avoid token limits
+        if (conversationHistory.length > 10) {
+            conversationHistory = conversationHistory.slice(-10);
+        }
+
         const completion = await anthropic.messages.create({
             model: "claude-3-sonnet-20240229",
             max_tokens: 1000,
             system: systemPrompt,
-            messages: [{ role: "user", content: message }]
+            messages: conversationHistory
+        });
+
+        // Add AI response to history
+        conversationHistory.push({ 
+            role: "assistant", 
+            content: completion.content[0].text 
         });
 
         res.status(200).json({ response: completion.content[0].text });
