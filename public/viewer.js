@@ -6,11 +6,11 @@ function initViewer() {
     
     // Create scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000);
+    scene.background = new THREE.Color(0x111111); // Slightly lighter than pure black
 
     // Setup camera
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth * 0.8 / (window.innerHeight * 0.8), 0.1, 1000);
-    camera.position.z = 5;
+    camera = new THREE.PerspectiveCamera(60, window.innerWidth * 0.8 / (window.innerHeight * 0.8), 0.1, 1000);
+    camera.position.set(0, 2, 8); // Better camera position
 
     // Setup renderer
     const container = document.getElementById('model-container');
@@ -19,20 +19,27 @@ function initViewer() {
     container.appendChild(renderer.domElement);
 
     // Add lights
-    const ambientLight = new THREE.AmbientLight(0x404040, 2);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 3); // Brighter ambient light
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-    directionalLight.position.set(1, 1, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 4); // Brighter main light
+    directionalLight.position.set(5, 5, 5);
     scene.add(directionalLight);
+
+    // Add additional light from another angle
+    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 3);
+    directionalLight2.position.set(-5, -5, -5);
+    scene.add(directionalLight2);
 
     // Add controls
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.screenSpacePanning = false;
-    controls.minDistance = 3;
-    controls.maxDistance = 10;
+    controls.minDistance = 2;  // Allow closer zoom
+    controls.maxDistance = 20; // Allow further zoom
+    controls.target.set(0, 0, 0);
+    controls.update();
 
     // Load model
     const loader = new THREE.GLTFLoader();
@@ -49,8 +56,11 @@ function initViewer() {
             // Scale model to fit view
             const size = box.getSize(new THREE.Vector3());
             const maxDim = Math.max(size.x, size.y, size.z);
-            const scale = 3 / maxDim;
+            const scale = 5 / maxDim; // Increased scale factor
             model.scale.multiplyScalar(scale);
+
+            // Rotate the model slightly
+            model.rotation.y = Math.PI / 4; // 45-degree rotation
 
             scene.add(model);
         },
