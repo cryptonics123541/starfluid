@@ -158,7 +158,6 @@ h1 {
     text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
 
-/* 3D Viewer Modal Styles */
 .schematic-modal {
     display: none;
     position: fixed;
@@ -173,8 +172,8 @@ h1 {
 }
 
 .schematic-content {
-    width: 80%;
-    height: 80%;
+    width: 90%;
+    height: 90%;
     position: relative;
     background: rgba(0, 0, 51, 0.3);
     border: 1px solid rgba(0, 255, 255, 0.3);
@@ -200,12 +199,27 @@ h1 {
 .sketchfab-embed-wrapper {
     width: 100%;
     height: 100%;
+    background: transparent;
 }
 
 .sketchfab-embed-wrapper iframe {
     width: 100%;
     height: 100%;
     border-radius: 10px;
+    background: transparent;
+}
+
+.model-credits {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #00ffff;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    z-index: 2;
+    background: rgba(0, 0, 51, 0.6);
+    padding: 5px 10px;
+    border-radius: 5px;
 }
 
 #stars-container {
