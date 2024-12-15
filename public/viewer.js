@@ -1,16 +1,16 @@
 let scene, camera, renderer, controls, model;
 let isInitialized = false;
 
-function initViewer() {
+async function initViewer() {
     if (isInitialized) return;
     
     // Create scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0a192f); // Dark blue background
+    scene.background = new THREE.Color(0x0a192f);
 
-    // Setup camera with closer initial position
+    // Setup camera
     camera = new THREE.PerspectiveCamera(60, window.innerWidth * 0.8 / (window.innerHeight * 0.8), 0.1, 1000);
-    camera.position.set(0, 0, 3); // Much closer initial position
+    camera.position.set(0, 0, 3);
 
     // Setup renderer
     const container = document.getElementById('model-container');
@@ -38,11 +38,8 @@ function initViewer() {
     pointLight.position.set(0, 2, 2);
     scene.add(pointLight);
 
-    // Import OrbitControls from Three.js modules
-    const OrbitControls = THREE.OrbitControls;
-    
-    // Setup controls
-    controls = new OrbitControls(camera, renderer.domElement);
+    // Setup controls using the correct import
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.screenSpacePanning = true;
@@ -51,46 +48,38 @@ function initViewer() {
     controls.target.set(0, 0, 0);
     controls.update();
 
-    // Import GLTFLoader from Three.js modules
-    const GLTFLoader = THREE.GLTFLoader;
+    // Load model using the correct import
+    const loader = new THREE.GLTFLoader();
     
-    // Load model
-    const loader = new GLTFLoader();
-    loader.load(
-        '/models/harbinger.glb',
-        function (gltf) {
-            model = gltf.scene;
-            
-            // Center the model
-            const box = new THREE.Box3().setFromObject(model);
-            const center = box.getCenter(new THREE.Vector3());
-            model.position.sub(center);
-            
-            // Make the model larger
-            const size = box.getSize(new THREE.Vector3());
-            const maxDim = Math.max(size.x, size.y, size.z);
-            const scale = 8 / maxDim;
-            model.scale.multiplyScalar(scale);
+    try {
+        const gltf = await loader.loadAsync('/models/harbinger.glb');
+        model = gltf.scene;
+        
+        // Center the model
+        const box = new THREE.Box3().setFromObject(model);
+        const center = box.getCenter(new THREE.Vector3());
+        model.position.sub(center);
+        
+        // Make the model larger
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 8 / maxDim;
+        model.scale.multiplyScalar(scale);
 
-            // Rotate the model for better initial view
-            model.rotation.y = Math.PI / 4;
-            model.rotation.x = Math.PI / 16;
+        // Rotate the model for better initial view
+        model.rotation.y = Math.PI / 4;
+        model.rotation.x = Math.PI / 16;
 
-            scene.add(model);
+        scene.add(model);
 
-            // Position camera to look at model
-            const boundingBox = new THREE.Box3().setFromObject(model);
-            const modelCenter = boundingBox.getCenter(new THREE.Vector3());
-            controls.target.copy(modelCenter);
-            controls.update();
-        },
-        function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-        },
-        function (error) {
-            console.error('An error happened:', error);
-        }
-    );
+        // Position camera to look at model
+        const boundingBox = new THREE.Box3().setFromObject(model);
+        const modelCenter = boundingBox.getCenter(new THREE.Vector3());
+        controls.target.copy(modelCenter);
+        controls.update();
+    } catch (error) {
+        console.error('Error loading model:', error);
+    }
 
     // Animation loop
     function animate() {
