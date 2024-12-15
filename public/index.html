@@ -159,9 +159,12 @@
             
             if (!userInput.value.trim()) return;
             
+            const message = userInput.value;
+            userInput.value = '';
+            
             const userMessage = document.createElement('div');
             userMessage.className = 'message commander-message';
-            userMessage.textContent = `Commander: ${userInput.value}`;
+            userMessage.textContent = `Commander: ${message}`;
             chatContainer.appendChild(userMessage);
 
             const loadingDiv = document.createElement('div');
@@ -174,7 +177,7 @@
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: userInput.value })
+                    body: JSON.stringify({ message: message })
                 });
 
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -189,7 +192,6 @@
                 loadingDiv.style.color = '#ff0000';
             }
 
-            userInput.value = '';
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
