@@ -36,10 +36,14 @@
         }
 
         .chat-container {
-            border: 1px solid #ddd;
+            border: 1px solid #00ff00;
             border-radius: 5px;
             padding: 20px;
-            min-height: 400px;
+            height: 500px;
+            background: #000;
+            overflow-y: auto;
+            overflow-x: hidden;
+            margin-bottom: 20px;
         }
 
         .input-container {
@@ -76,6 +80,7 @@
             border-radius: 4px;
             white-space: pre-wrap;
             font-family: 'Courier New', monospace;
+            max-width: 100%;
         }
 
         .commander-message {
