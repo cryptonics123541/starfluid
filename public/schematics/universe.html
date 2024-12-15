@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universe Viewer</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000 url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+            animation: moveStars 100s linear infinite;
+            color: #00ffff;
+            font-family: 'Courier New', monospace;
+        }
+        @keyframes moveStars {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100%); }
+        }
+        model-viewer {
+            width: 100vw;
+            height: 100vh;
+        }
+        .credits {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #00ffff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Universe Model -->
+    <model-viewer
+        src="/models/universe.glb"
+        camera-controls
+        auto-rotate
+        camera-orbit="0deg 75deg 25m"
+        min-camera-orbit="auto auto 15m"
+        max-camera-orbit="auto auto 50m"
+        environment-image="neutral"
+        shadow-intensity="1"
+        exposure="1.0"
+        shadow-softness="1"
+        interaction-prompt="none">
+    </model-viewer>
+
+    <div class="credits">> Model: Universe Simulation</div>
+</body>
+</html>

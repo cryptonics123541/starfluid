@@ -29,7 +29,7 @@
         }
 
         body::after {
-            animation-delay: 50s; /* Slight offset for layered effect */
+            animation-delay: 50s; /* Offset for parallax effect */
             opacity: 0.6;
         }
 
@@ -47,7 +47,7 @@
         model-viewer {
             width: 100vw;
             height: 100vh;
-            z-index: 1; /* Place model viewer above background */
+            z-index: 1; /* Place above background */
         }
     </style>
 </head>
@@ -58,7 +58,9 @@
         camera-controls
         auto-rotate
         animation-name="auto"
-        camera-orbit="0deg 75deg 10m"
+        camera-orbit="0deg 75deg 20m"
+        min-camera-orbit="auto auto 10m"
+        max-camera-orbit="auto auto 50m"
         environment-image="neutral"
         shadow-intensity="1"
         exposure="1.0"
