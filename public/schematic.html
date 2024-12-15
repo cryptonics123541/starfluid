@@ -46,10 +46,20 @@
         > Model: D.S.S. Harbinger battle cruiser by Comrade1280
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.156.1/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.156.1/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.156.1/examples/js/controls/OrbitControls.js"></script>
-    <script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.156.1/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.156.1/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
         let scene, camera, renderer, controls, model;
 
         function init() {
@@ -80,7 +90,7 @@
             lights.forEach(light => scene.add(light));
 
             // Setup controls
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls = new OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
             controls.screenSpacePanning = true;
@@ -89,9 +99,10 @@
             controls.update();
 
             // Load model
-            const loader = new THREE.GLTFLoader();
+            const loader = new GLTFLoader();
             loader.load('/models/harbinger.glb',
                 function (gltf) {
+                    console.log('Model loaded successfully');
                     model = gltf.scene;
                     
                     // Center and scale model
@@ -112,6 +123,7 @@
                 },
                 function (error) {
                     console.error('Error loading model:', error);
+                    document.getElementById('loading-indicator').textContent = 'Error loading model';
                 }
             );
 
