@@ -18,7 +18,7 @@ function createStars() {
         star.style.top = `${y}px`;
         
         // Set animation properties
-        const speed = 2 + Math.random() * 3; // Random speed for each star
+        const speed = 1.5 + Math.random() * 2; // Faster base speed
         const delay = Math.random() * -20; // Negative delay for continuous effect
         star.style.animation = `flyingStar ${speed}s linear ${delay}s infinite`;
         
@@ -44,15 +44,6 @@ function createStars() {
                 ) scale(2);
                 opacity: 0;
             }
-        }
-        
-        .star {
-            position: absolute;
-            width: 1px !important;
-            height: 1px !important;
-            background: #ffffff;
-            box-shadow: 0 0 2px #fff, 0 0 4px #fff;
-            pointer-events: none;
         }
     `;
     document.head.appendChild(style);
