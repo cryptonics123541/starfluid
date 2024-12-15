@@ -1,0 +1,111 @@
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    background: #0a0a0a;
+    color: #00ffff;
+}
+
+.container {
+    width: 45%;
+    margin: 0;
+    float: left;
+    padding: 20px;
+    background: #000033;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid #00ffff;
+}
+
+.info-container {
+    width: 45%;
+    float: right;
+    padding: 20px;
+    background: #000033;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid #00ffff;
+}
+
+.chat-container {
+    border: 1px solid #00ffff;
+    border-radius: 5px;
+    padding: 20px;
+    height: 500px;
+    background: #000033;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 20px;
+}
+
+.message {
+    margin: 8px 0;
+    padding: 8px;
+    border-radius: 4px;
+    white-space: pre-wrap;
+}
+
+.commander-message {
+    background: #001a1a;
+    color: #00ffff;
+    border-left: 3px solid #008080;
+}
+
+.astro-message {
+    background: #000033;
+    color: #00ffff;
+    border-left: 3px solid #00ffff;
+}
+
+nav a {
+    color: #00ffff;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+nav a:hover {
+    color: #80ffff;
+    text-decoration: underline;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    background: #000033;
+    color: #00ffff;
+    border: 1px solid #00ffff;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+}
+
+button {
+    padding: 10px 20px;
+    background: #000066;
+    color: #00ffff;
+    border: 1px solid #00ffff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+}
+
+button:hover {
+    background: #000099;
+}
+
+.info-section {
+    margin: 10px 0;
+    padding: 10px;
+    border-left: 3px solid #00ffff;
+}
+
+.loading {
+    display: inline-block;
+    margin-left: 4px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: .2; }
+    50% { opacity: 1; }
+    100% { opacity: .2; }
+} 
