@@ -10,37 +10,39 @@ body {
 
 .container {
     width: 48%;
-    height: 90vh;
+    height: 80vh;
     margin: 0;
     float: left;
     padding: 20px;
-    background: #000033;
+    background: rgba(0, 0, 51, 0.8);
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     border: 1px solid #00ffff;
     position: relative;
     z-index: 1;
+    backdrop-filter: blur(3px);
 }
 
 .info-container {
     width: 48%;
-    height: 90vh;
+    height: 80vh;
     float: right;
     padding: 20px;
-    background: #000033;
+    background: rgba(0, 0, 51, 0.8);
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     border: 1px solid #00ffff;
     position: relative;
     z-index: 1;
+    backdrop-filter: blur(3px);
 }
 
 .chat-container {
-    height: calc(90vh - 150px);
+    height: calc(80vh - 150px);
     border: 1px solid #00ffff;
     border-radius: 5px;
     padding: 20px;
-    background: #000033;
+    background: rgba(0, 0, 51, 0.6);
     overflow-y: auto;
     overflow-x: hidden;
     margin-bottom: 20px;
@@ -54,13 +56,13 @@ body {
 }
 
 .commander-message {
-    background: #001a1a;
+    background: rgba(0, 26, 26, 0.8);
     color: #00ffff;
     border-left: 3px solid #008080;
 }
 
 .astro-message {
-    background: #000033;
+    background: rgba(0, 0, 51, 0.8);
     color: #00ffff;
     border-left: 3px solid #00ffff;
 }
