@@ -35,10 +35,8 @@ export default async function handler(req, res) {
         const completion = await anthropic.messages.create({
             model: "claude-3-sonnet-20240229",
             max_tokens: 1000,
-            messages: [
-                { role: "system", content: systemPrompt },
-                { role: "user", content: message }
-            ]
+            system: systemPrompt,
+            messages: [{ role: "user", content: message }]
         });
 
         res.status(200).json({ response: completion.content[0].text });
