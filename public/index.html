@@ -49,16 +49,14 @@
         </div>
     </div>
 
-    <!-- Put all script tags here, right before closing body tag -->
-    <script src="stars.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.156.1/three.min.js"></script>
-    <script type="text/javascript">
-        // This is a workaround for the GLTFLoader and OrbitControls
-        window.THREE = THREE;
-    </script>
-    <script src="https://unpkg.com/three@0.156.1/examples/jsm/loaders/GLTFLoader.js"></script>
-    <script src="https://unpkg.com/three@0.156.1/examples/jsm/controls/OrbitControls.js"></script>
-    <script src="viewer.js"></script>
+    <!-- Three.js and related imports -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.156.1/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.156.1/examples/jsm/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.156.1/examples/jsm/controls/OrbitControls.js"></script>
+
+<!-- Then your files -->
+<script src="stars.js"></script>
+<script src="viewer.js"></script>
     <script>
         async function sendMessage() {
             const userInput = document.getElementById('userInput');
