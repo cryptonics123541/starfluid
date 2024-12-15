@@ -22,9 +22,12 @@
         src="/models/universe.glb"
         camera-controls
         auto-rotate
-        camera-orbit="0deg 75deg 50m"
-        min-camera-orbit="auto auto 10m"
-        max-camera-orbit="auto auto 10000m" <!-- Infinite zoom -->
+        camera-orbit="0deg 75deg 100m"
+        min-camera-orbit="auto auto 50m"
+        max-camera-orbit="auto auto 1000m"
+        interpolation-decay="300"
+        orbit-sensitivity="0.5"
+        zoom-sensitivity="0.5"
         environment-image="neutral"
         shadow-intensity="1"
         exposure="1.0"

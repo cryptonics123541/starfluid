@@ -9,11 +9,13 @@
         body {
             margin: 0;
             overflow: hidden;
-            background: #000; /* Black background for black hole */
+            background: #000;
         }
         model-viewer {
             width: 100vw;
             height: 100vh;
+            --poster-color: transparent;
+            background-color: #000;
         }
     </style>
 </head>
@@ -22,14 +24,17 @@
         src="/models/black_hole.glb"
         camera-controls
         auto-rotate
-        camera-orbit="0deg 90deg 10m"
-        min-camera-orbit="auto auto 5m"
+        camera-orbit="0deg 90deg 20m"
+        min-camera-orbit="auto auto 10m"
         max-camera-orbit="auto auto 50m"
         environment-image="neutral"
         shadow-intensity="1"
-        exposure="1.5"
+        exposure="0.75"
         shadow-softness="1"
-        interaction-prompt="none">
+        interaction-prompt="none"
+        camera-target="0m 0m 0m"
+        interpolation-decay="200"
+        >
     </model-viewer>
 </body>
 </html>
