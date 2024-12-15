@@ -11,11 +11,11 @@ body {
 }
 
 .container {
-    width: 45%;
+    width: 35%; /* Reduced from 45% */
     height: 90vh;
     margin: 0;
     padding: 20px;
-    background: rgba(0, 0, 51, 0.15);
+    background: rgba(0, 0, 51, 0.1); /* More transparent */
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
     border: 1px solid rgba(0, 255, 255, 0.3);
@@ -27,13 +27,13 @@ body {
 }
 
 .info-container {
-    width: 45%;
+    width: 35%; /* Reduced from 45% */
     height: 90vh;
     position: absolute;
     right: 20px;
     top: 20px;
     padding: 20px;
-    background: rgba(0, 0, 51, 0.15);
+    background: rgba(0, 0, 51, 0.1); /* More transparent */
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
     border: 1px solid rgba(0, 255, 255, 0.3);
@@ -46,7 +46,7 @@ body {
     border: 1px solid rgba(0, 255, 255, 0.3);
     border-radius: 10px;
     padding: 20px;
-    background: rgba(0, 0, 51, 0.4);
+    background: rgba(0, 0, 51, 0.2);
     overflow-y: auto;
     margin-bottom: 10px;
 }
@@ -118,7 +118,7 @@ button:hover {
 .info-section {
     margin: 20px 0;
     padding: 20px;
-    background: rgba(0, 0, 51, 0.4);
+    background: rgba(0, 0, 51, 0.2);
     border-radius: 8px;
     border-left: 3px solid rgba(0, 255, 255, 0.3);
 }

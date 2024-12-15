@@ -18,8 +18,8 @@ function createStars() {
         star.style.top = `${y}px`;
         
         // Set animation properties
-        const speed = 1.5 + Math.random() * 2; // Faster base speed
-        const delay = Math.random() * -20; // Negative delay for continuous effect
+        const speed = 0.8 + Math.random() * 1; // Much faster speed (0.8-1.8s)
+        const delay = Math.random() * -10; // Shorter delay for quicker initial appearance
         star.style.animation = `flyingStar ${speed}s linear ${delay}s infinite`;
         
         return star;
@@ -38,9 +38,9 @@ function createStars() {
             }
             to {
                 transform: translate3d(
-                    ${(Math.random() - 0.5) * 200}px,
-                    ${(Math.random() - 0.5) * 200}px,
-                    500px
+                    ${(Math.random() - 0.5) * 300}px,
+                    ${(Math.random() - 0.5) * 300}px,
+                    800px
                 ) scale(2);
                 opacity: 0;
             }
