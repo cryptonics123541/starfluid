@@ -25,7 +25,7 @@
         <div class="info-section">
             <h3>> NAVIGATION</h3>
             <p><a href="/stars/stars.html">Stars Fluid Simulation</a></p>
-            <p><a href="#">Ship Schematics</a></p>
+            <p><a onclick="toggleSchematicViewer()" style="cursor: pointer;">Ship Schematics</a></p>
             <p><a href="#">Mission Logs</a></p>
         </div>
         <div class="info-section">
@@ -36,8 +36,42 @@
         </div>
     </div>
 
+    <!-- 3D Model Viewer Modal -->
+    <div id="schematicViewer" class="schematic-modal">
+        <div class="schematic-content">
+            <span class="close-button" onclick="toggleSchematicViewer()">&times;</span>
+            <div class="sketchfab-embed-wrapper">
+                <iframe 
+                    title="Space Battleship Aquamarine" 
+                    frameborder="0" 
+                    allowfullscreen 
+                    mozallowfullscreen="true" 
+                    webkitallowfullscreen="true" 
+                    allow="autoplay; fullscreen; xr-spatial-tracking" 
+                    xr-spatial-tracking 
+                    execution-while-out-of-viewport 
+                    execution-while-not-rendered 
+                    web-share 
+                    src="https://sketchfab.com/models/c508be042d9a4d358359623f6be34bc3/embed">
+                </iframe>
+            </div>
+            <div class="model-credits">
+                > Model: Space Battleship Aquamarine by Kai Xiang
+            </div>
+        </div>
+    </div>
+
     <script src="stars.js"></script>
     <script>
+        function toggleSchematicViewer() {
+            const viewer = document.getElementById('schematicViewer');
+            if (viewer.style.display === 'none' || !viewer.style.display) {
+                viewer.style.display = 'flex';
+            } else {
+                viewer.style.display = 'none';
+            }
+        }
+
         async function sendMessage() {
             const userInput = document.getElementById('userInput');
             const chatContainer = document.getElementById('chat');
