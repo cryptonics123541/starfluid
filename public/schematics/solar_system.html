@@ -22,14 +22,18 @@
         src="/models/solar_system_animation.glb"
         camera-controls
         auto-rotate
-        auto-play
+        autoplay
+        animation-crossfade-duration="1"
+        interaction-prompt="none"
         camera-orbit="0deg 75deg 30m"
         min-camera-orbit="auto auto 15m"
         max-camera-orbit="auto auto 100m"
         environment-image="neutral"
         shadow-intensity="1"
         exposure="1.0"
-        interaction-prompt="none">
+        interpolation-decay="200"
+        rotation-per-second="5deg"
+        ar-status="not-presenting">
     </model-viewer>
 </body>
 </html>
