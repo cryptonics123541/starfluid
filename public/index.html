@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Assistant</title>
+    <title>ASTRO-7 Terminal</title>
     <style>
         body {
             margin: 0;
@@ -69,6 +69,68 @@
         button:hover {
             background: #0052a3;
         }
+
+        .message {
+            margin: 8px 0;
+            padding: 8px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+        }
+
+        .commander-message {
+            background: #1a1a1a;
+            color: #00ff00;
+        }
+
+        .astro-message {
+            background: #000;
+            color: #00ffff;
+            border-left: 3px solid #00ffff;
+        }
+
+        .loading {
+            display: inline-block;
+            margin-left: 4px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: .2; }
+            50% { opacity: 1; }
+            100% { opacity: .2; }
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #00ff00;
+        }
+
+        .container {
+            background: #000;
+            border: 1px solid #00ff00;
+        }
+
+        .chat-container {
+            background: #000;
+            border: 1px solid #00ff00;
+            overflow-y: auto;
+        }
+
+        textarea {
+            background: #1a1a1a;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+        }
+
+        button {
+            background: #006600;
+            border: 1px solid #00ff00;
+        }
+
+        button:hover {
+            background: #008800;
+        }
     </style>
 </head>
 <body>
@@ -78,14 +140,14 @@
             <a href="/stars/stars.html">Stars Fluid</a>
         </nav>
 
-        <h1>AI Assistant</h1>
+        <h1>ASTRO-7 Ship Terminal</h1>
         
         <div class="chat-container" id="chat">
             <!-- Chat messages will appear here -->
         </div>
 
         <div class="input-container">
-            <textarea id="userInput" placeholder="Type your message here..."></textarea>
+            <textarea id="userInput" placeholder="Enter command or query, Commander..."></textarea>
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
@@ -95,47 +157,48 @@
             const userInput = document.getElementById('userInput');
             const chatContainer = document.getElementById('chat');
             
-            // Don't send empty messages
             if (!userInput.value.trim()) return;
             
-            // Add user message to chat
-            const userMessage = document.createElement('p');
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message commander-message';
             userMessage.textContent = `Commander: ${userInput.value}`;
             chatContainer.appendChild(userMessage);
+
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message astro-message';
+            loadingDiv.innerHTML = 'ASTRO-7: Processing<span class="loading">...</span>';
+            chatContainer.appendChild(loadingDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
 
             try {
                 const response = await fetch('/api/chat', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message: userInput.value })
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data = await response.json();
                 
-                // Add AI response to chat
-                const aiMessage = document.createElement('p');
-                aiMessage.textContent = `ASTRO-7: ${data.response || 'System error - please try again'}`;
-                chatContainer.appendChild(aiMessage);
+                loadingDiv.innerHTML = `ASTRO-7: ${data.response || 'System error - please try again'}`;
+                loadingDiv.className = 'message astro-message';
 
-                // Scroll to bottom of chat
-                chatContainer.scrollTop = chatContainer.scrollHeight;
             } catch (error) {
                 console.error('Error:', error);
-                const errorMessage = document.createElement('p');
-                errorMessage.textContent = 'Error: Could not connect to ship systems. Please try again.';
-                errorMessage.style.color = 'red';
-                chatContainer.appendChild(errorMessage);
+                loadingDiv.innerHTML = 'Error: Could not connect to ship systems. Please try again.';
+                loadingDiv.style.color = '#ff0000';
             }
 
-            // Clear input
             userInput.value = '';
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
+
+        document.getElementById('userInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
     </script>
 </body>
 </html>
