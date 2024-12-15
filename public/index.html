@@ -3,111 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTRO-7 Terminal</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>ASTRO-7 Ship Schematics</title>
+    <!-- Import the component -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            background: #0a1a4d;
+            color: #00ffff;
+            font-family: 'Courier New', monospace;
+        }
+        model-viewer {
+            width: 100vw;
+            height: 100vh;
+            background-color: #0a1a4d;
+        }
+        .model-credits {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: #00ffff;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            z-index: 2;
+            background: rgba(10, 26, 77, 0.6);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>ASTRO-7 Ship Terminal</h1>
-        
-        <div class="chat-container" id="chat">
-            <!-- Chat messages will appear here -->
-        </div>
-
-        <div class="input-container">
-            <textarea id="userInput" placeholder="Enter command or query, Commander..."></textarea>
-            <button onclick="sendMessage()">Send</button>
-        </div>
+    <model-viewer
+        src="/models/harbinger.glb"
+        camera-controls
+        auto-rotate
+        camera-orbit="45deg 55deg 3m"
+        environment-image="neutral"
+        shadow-intensity="1"
+        exposure="1"
+        camera-target="0m 0m 0m"
+        min-camera-orbit="auto auto auto"
+        max-camera-orbit="auto auto auto"
+    ></model-viewer>
+    <div class="model-credits">
+        > Model: D.S.S. Harbinger battle cruiser by Comrade1280
     </div>
-
-    <div class="info-container">
-        <h2 class="info-title">> SHIP RESOURCES</h2>
-        <div class="info-section">
-            <h3>> NAVIGATION</h3>
-            <p><a href="/stars/stars.html">Stars Fluid Simulation</a></p>
-            <p><a href="/schematic.html" target="_blank">Ship Schematics</a></p>
-            <p><a href="#">Mission Logs</a></p>
-        </div>
-        <div class="info-section">
-            <h3>> SHIP STATUS</h3>
-            <p>Systems: ONLINE</p>
-            <p>Location: DEEP SPACE</p>
-            <p>Mission: ACTIVE</p>
-        </div>
-    </div>
-
-
-    <!-- Three.js and related imports -->
-<script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://unpkg.com/three@0.156.1/build/three.module.js",
-    "three/addons/": "https://unpkg.com/three@0.156.1/examples/jsm/"
-  }
-}
-</script>
-<script type="module">
-  import * as THREE from 'three';
-  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-  window.THREE = THREE;
-  window.OrbitControls = OrbitControls;
-  window.GLTFLoader = GLTFLoader;
-</script>
-
-<!-- Then your files -->
-<script src="stars.js"></script>
-<script src="viewer.js"></script>
-    <script>
-        async function sendMessage() {
-            const userInput = document.getElementById('userInput');
-            const chatContainer = document.getElementById('chat');
-            
-            if (!userInput.value.trim()) return;
-            
-            const message = userInput.value;
-            userInput.value = '';
-            
-            const userMessage = document.createElement('div');
-            userMessage.className = 'message commander-message';
-            userMessage.textContent = `Commander: ${message}`;
-            chatContainer.appendChild(userMessage);
-
-            const loadingDiv = document.createElement('div');
-            loadingDiv.className = 'message astro-message';
-            loadingDiv.innerHTML = 'ASTRO-7: Processing<span class="loading">...</span>';
-            chatContainer.appendChild(loadingDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-
-            try {
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: message })
-                });
-
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const data = await response.json();
-                
-                loadingDiv.innerHTML = `ASTRO-7: ${data.response || 'System error - please try again'}`;
-                loadingDiv.className = 'message astro-message';
-
-            } catch (error) {
-                console.error('Error:', error);
-                loadingDiv.innerHTML = 'Error: Could not connect to ship systems. Please try again.';
-                loadingDiv.style.color = '#ff0000';
-            }
-
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        document.getElementById('userInput').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
-    </script>
 </body>
 </html>
