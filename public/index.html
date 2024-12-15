@@ -95,9 +95,12 @@
             const userInput = document.getElementById('userInput');
             const chatContainer = document.getElementById('chat');
             
+            // Don't send empty messages
+            if (!userInput.value.trim()) return;
+            
             // Add user message to chat
             const userMessage = document.createElement('p');
-            userMessage.textContent = `You: ${userInput.value}`;
+            userMessage.textContent = `Commander: ${userInput.value}`;
             chatContainer.appendChild(userMessage);
 
             try {
@@ -109,16 +112,23 @@
                     body: JSON.stringify({ message: userInput.value })
                 });
 
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
                 const data = await response.json();
                 
                 // Add AI response to chat
                 const aiMessage = document.createElement('p');
-                aiMessage.textContent = `AI: ${data.response}`;
+                aiMessage.textContent = `ASTRO-7: ${data.response || 'System error - please try again'}`;
                 chatContainer.appendChild(aiMessage);
+
+                // Scroll to bottom of chat
+                chatContainer.scrollTop = chatContainer.scrollHeight;
             } catch (error) {
                 console.error('Error:', error);
                 const errorMessage = document.createElement('p');
-                errorMessage.textContent = 'Error: Could not send message';
+                errorMessage.textContent = 'Error: Could not connect to ship systems. Please try again.';
                 errorMessage.style.color = 'red';
                 chatContainer.appendChild(errorMessage);
             }
