@@ -7,10 +7,10 @@
     <style>
         body {
             margin: 0;
-            background: #000033;
+            background: #0a1a4d; /* Lighter blue background */
             color: #00ffff;
             font-family: 'Courier New', monospace;
-            overflow: hidden; /* Prevent scrollbars */
+            overflow: hidden;
         }
         #model-container {
             width: 100vw;
@@ -25,7 +25,7 @@
             font-family: 'Courier New', monospace;
             text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
             z-index: 2;
-            background: rgba(0, 0, 51, 0.6);
+            background: rgba(10, 26, 77, 0.6);
             padding: 5px 10px;
             border-radius: 5px;
         }
@@ -66,13 +66,13 @@
         let scene, camera, renderer, controls, model;
 
         function init() {
-            // Create scene
+            // Create scene with lighter background
             scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x000033);
+            scene.background = new THREE.Color(0x0a1a4d); // Lighter blue background
 
-            // Setup camera with better initial position
+            // Setup camera closer to viewing position
             camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.set(0, 2, 10);
+            camera.position.set(0, 0, 6); // Moved camera closer
 
             // Setup renderer with better quality
             renderer = new THREE.WebGLRenderer({ 
@@ -82,37 +82,34 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.toneMapping = THREE.ACESFilmicToneMapping;
-            renderer.toneMappingExposure = 1.0;
+            renderer.toneMappingExposure = 1.5; // Increased exposure
             document.getElementById('model-container').appendChild(renderer.domElement);
 
-            // Enhanced lighting setup
+            // Enhanced lighting setup with brighter lights
             const lights = [
-                new THREE.AmbientLight(0xffffff, 0.8),  // Base ambient light
-                new THREE.DirectionalLight(0xffffff, 1.5),  // Main light
-                new THREE.DirectionalLight(0xffffff, 1.0),  // Fill light
-                new THREE.PointLight(0xffffff, 1.0)    // Accent light
+                new THREE.AmbientLight(0xffffff, 1.2),  // Brighter ambient light
+                new THREE.DirectionalLight(0xffffff, 2.0),  // Brighter main light
+                new THREE.DirectionalLight(0xffffff, 1.5),  // Brighter fill light
+                new THREE.PointLight(0xffffff, 1.5)    // Brighter accent light
             ];
 
-            lights[1].position.set(10, 10, 10);  // Main light from front-top-right
-            lights[2].position.set(-5, 5, -5);   // Fill light from back-top-left
-            lights[3].position.set(0, 5, 15);    // Accent light from front
+            lights[1].position.set(5, 5, 5);   // Main light closer
+            lights[2].position.set(-3, 2, -3); // Fill light closer
+            lights[3].position.set(0, 2, 8);   // Accent light closer
 
-            // Add all lights to the scene
             lights.forEach(light => scene.add(light));
 
-            // Setup enhanced controls
+            // Setup controls - removed auto-rotation
             controls = new OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
             controls.screenSpacePanning = true;
             controls.minDistance = 3;
-            controls.maxDistance = 20;
+            controls.maxDistance = 15;
             controls.target.set(0, 0, 0);
-            controls.autoRotate = true;
-            controls.autoRotateSpeed = 0.5;
             controls.update();
 
-            // Load model with enhanced positioning
+            // Load model
             const loader = new GLTFLoader();
             loader.load('/models/harbinger.glb',
                 function (gltf) {
@@ -124,14 +121,14 @@
                     const center = box.getCenter(new THREE.Vector3());
                     model.position.sub(center);
                     
-                    // Scale the model
+                    // Scale the model larger
                     const size = box.getSize(new THREE.Vector3());
                     const maxDim = Math.max(size.x, size.y, size.z);
-                    const scale = 4 / maxDim;  // Increased scale
+                    const scale = 6 / maxDim; // Increased scale
                     model.scale.multiplyScalar(scale);
 
-                    // Initial rotation for better view
-                    model.rotation.y = Math.PI / 4;
+                    // Set initial rotation to show front view
+                    model.rotation.y = 0;
 
                     scene.add(model);
                     document.getElementById('loading-indicator').style.display = 'none';
@@ -153,7 +150,7 @@
 
         function animate() {
             requestAnimationFrame(animate);
-            controls.update(); // Required for damping and auto-rotation
+            controls.update();
             renderer.render(scene, camera);
         }
 
