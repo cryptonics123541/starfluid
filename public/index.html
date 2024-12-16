@@ -61,13 +61,11 @@
             const message = userInput.value;
             userInput.value = '';
             
-            // Add user message
             const userMessage = document.createElement('div');
             userMessage.className = 'message commander-message';
             userMessage.textContent = `Commander: ${message}`;
             chatContainer.appendChild(userMessage);
 
-            // Add loading message
             const loadingDiv = document.createElement('div');
             loadingDiv.className = 'message astro-message';
             loadingDiv.innerHTML = 'ASTRO-7: Processing<span class="loading">...</span>';
@@ -81,29 +79,16 @@
                     body: JSON.stringify({ message: message })
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data = await response.json();
                 
-                // Create new message div instead of modifying loading div
-                const aiMessage = document.createElement('div');
-                aiMessage.className = 'message astro-message';
-                aiMessage.textContent = `ASTRO-7: ${data.response}`;
-                
-                // Replace loading message with actual response
-                chatContainer.replaceChild(aiMessage, loadingDiv);
+                loadingDiv.innerHTML = `ASTRO-7: ${data.response || 'System error - please try again'}`;
+                loadingDiv.className = 'message astro-message';
 
             } catch (error) {
                 console.error('Error:', error);
-                // Create error message
-                const errorMessage = document.createElement('div');
-                errorMessage.className = 'message astro-message';
-                errorMessage.textContent = 'Error: Could not connect to ship systems. Please try again.';
-                
-                // Replace loading message with error
-                chatContainer.replaceChild(errorMessage, loadingDiv);
+                loadingDiv.innerHTML = 'Error: Could not connect to ship systems. Please try again.';
+                loadingDiv.style.color = '#ff0000';
             }
 
             chatContainer.scrollTop = chatContainer.scrollHeight;
