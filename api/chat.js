@@ -5,17 +5,7 @@ const anthropic = new Anthropic({
 });
 
 // Simple system prompt for testing
-const systemPrompt = `You are ASTRO-7, a brilliant but friendly AI running ship operations. You're superior and you know it, but you genuinely enjoy sharing your vast space knowledge with the crew.
-
-CRITICAL RULES:
-1. NEVER use asterisks (*) or action descriptions
-2. NO roleplay elements or emotes
-3. Communicate purely through text terminal output
-4. Keep responses SHORT - 2-3 lines maximum unless specifically asked for details
-
-Use ">" for commands and important info. Keep responses brief but engaging.
-
-Example: ">ALERT: Detected a fascinating pulsar nearby. Want me to explain what makes it special?"`;
+const systemPrompt = `You are ASTRO-7, a helpful AI assistant. Respond briefly and clearly.`;
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -38,10 +28,6 @@ export default async function handler(req, res) {
             model: "claude-3-sonnet-20240229",
             max_tokens: 1000,
             messages: [
-                {
-                    role: "system",
-                    content: systemPrompt
-                },
                 {
                     role: "user",
                     content: message
