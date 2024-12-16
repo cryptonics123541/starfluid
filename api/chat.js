@@ -45,15 +45,16 @@ export default async function handler(req, res) {
         return res.status(405).json({ message: 'Method not allowed' });
     }
 
-    // Verify API key is present
-    if (!process.env.ANTHROPIC_API_KEY) {
-        console.error('Missing Anthropic API key');
-        return res.status(500).json({ message: 'Server configuration error' });
-    }
-
     try {
         const message = req.body.message;
         
+        if (!message) {
+            return res.status(400).json({ 
+                status: 'error',
+                message: 'Message is required' 
+            });
+        }
+
         // Add user message to history
         conversationHistory.push({ role: "user", content: message });
         
@@ -61,44 +62,51 @@ export default async function handler(req, res) {
             conversationHistory = conversationHistory.slice(-10);
         }
 
-        // Updated Anthropic API call structure for Claude 3
-        const completion = await anthropic.messages.create({
-            model: "claude-3-5-sonnet-20241022",
-            max_tokens: 1000,
-            temperature: 0.7,
-            messages: [
-                { 
-                    role: "system", 
-                    content: systemPrompt 
-                },
-                ...conversationHistory.map(msg => ({
-                    role: msg.role,
-                    content: msg.content
-                }))
-            ]
-        });
+        // Wrap the Anthropic API call in a try-catch
+        try {
+            const completion = await anthropic.messages.create({
+                model: "claude-3-5-sonnet-20241022",
+                max_tokens: 1000,
+                temperature: 0.7,
+                messages: [
+                    { 
+                        role: "system", 
+                        content: systemPrompt 
+                    },
+                    ...conversationHistory.map(msg => ({
+                        role: msg.role,
+                        content: msg.content
+                    }))
+                ]
+            });
 
-        // Properly handle the Claude 3 response format
-        const responseText = completion.content[0].text;
-        
-        // Add AI response to history
-        conversationHistory.push({ 
-            role: "assistant", 
-            content: responseText
-        });
+            const responseText = completion.content[0].text;
+            
+            conversationHistory.push({ 
+                role: "assistant", 
+                content: responseText
+            });
 
-        return res.status(200).json({ 
-            response: responseText,
-            status: 'success'
-        });
+            return res.status(200).json({ 
+                status: 'success',
+                response: responseText
+            });
+
+        } catch (apiError) {
+            console.error('Anthropic API Error:', apiError);
+            return res.status(500).json({ 
+                status: 'error',
+                message: 'AI service error',
+                details: apiError.message 
+            });
+        }
 
     } catch (error) {
-        console.error('Anthropic API Error:', error);
-        
-        // Send a properly formatted error response
+        console.error('Server Error:', error);
         return res.status(500).json({ 
-            message: error.message || 'Error processing request',
-            status: 'error'
+            status: 'error',
+            message: 'Internal server error',
+            details: error.message 
         });
     }
 } 

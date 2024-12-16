@@ -75,16 +75,25 @@
             try {
                 const response = await fetch('/api/chat', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
                     body: JSON.stringify({ message: message })
                 });
 
-                const data = await response.json();
-                
-                if (!response.ok) {
-                    throw new Error(data.message || `HTTP error! status: ${response.status}`);
+                let data;
+                try {
+                    data = await response.json();
+                } catch (parseError) {
+                    console.error('JSON Parse Error:', parseError);
+                    throw new Error('Invalid response format from server');
                 }
-                
+
+                if (!response.ok || data.status === 'error') {
+                    throw new Error(data.message || `Error: ${response.status}`);
+                }
+
                 loadingDiv.innerHTML = `ASTRO-7: ${data.response || 'System error - please try again'}`;
                 loadingDiv.className = 'message astro-message';
 
