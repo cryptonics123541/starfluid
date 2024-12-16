@@ -7,11 +7,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="stars-container"></div>
-    
     <div class="container">
         <h1>ASTRO-7 Ship Terminal</h1>
-        
+
         <div class="chat-container" id="chat">
             <!-- Chat messages will appear here -->
         </div>
@@ -30,6 +28,7 @@
             <p><a href="/schematics/solar_system.html" target="_blank">Sol-1 (HOME)</a></p>
             <p><a href="/schematics/black_hole.html" target="_blank">Black Hole</a></p>
             <p><a href="/schematics/universe.html" target="_blank">Universe</a></p>
+            <p><a href="/stars/stars.html">Stars Fluid Simulation</a></p>
         </div>
         <div class="info-section">
             <h3>> SHIP STATUS</h3>
@@ -39,31 +38,21 @@
         </div>
     </div>
 
-    <button id="initializeStars" class="initialize-button">Initialize Star Fluid</button>
-
-    <div class="schematic-modal" id="schematicModal">
-        <div class="schematic-content">
-            <span class="close-button">&times;</span>
-            <div id="model-container"></div>
-            <div class="model-credits">ASTRO-7 Schematic View</div>
-        </div>
-    </div>
-
     <!-- Scripts -->
     <script src="stars.js"></script>
     <script>
         async function sendMessage() {
             const userInput = document.getElementById('userInput');
             const chatContainer = document.getElementById('chat');
-            
+
             if (!userInput.value.trim()) return;
-            
+
             const message = userInput.value;
             userInput.value = '';
-            
+
             const userMessage = document.createElement('div');
             userMessage.className = 'message commander-message';
-            userMessage.textContent = `Commander: ${message}`;
+            userMessage.textContent = Commander: ${message};
             chatContainer.appendChild(userMessage);
 
             const loadingDiv = document.createElement('div');
@@ -79,10 +68,10 @@
                     body: JSON.stringify({ message: message })
                 });
 
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                if (!response.ok) throw new Error(HTTP error! status: ${response.status});
                 const data = await response.json();
-                
-                loadingDiv.innerHTML = `ASTRO-7: ${data.response || 'System error - please try again'}`;
+
+                loadingDiv.innerHTML = ASTRO-7: ${data.response || 'System error - please try again'};
                 loadingDiv.className = 'message astro-message';
 
             } catch (error) {
@@ -99,10 +88,6 @@
                 e.preventDefault();
                 sendMessage();
             }
-        });
-
-        document.getElementById('initializeStars').addEventListener('click', function() {
-            window.location.href = '/stars/stars.html';
         });
     </script>
 </body>
