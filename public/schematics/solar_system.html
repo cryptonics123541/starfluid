@@ -35,7 +35,6 @@
     <model-viewer
         src="/models/solar_system_animation.glb"
         camera-controls
-        autoplay
         camera-orbit="0deg 75deg 30m"
         min-camera-orbit="auto auto 15m"
         max-camera-orbit="auto auto 100m"
@@ -46,7 +45,6 @@
     </model-viewer>
 
     <script>
-        // Initialize Three.js scene
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({
@@ -55,7 +53,6 @@
         });
         renderer.setSize(window.innerWidth, window.innerHeight);
 
-        // Create stars
         const starsGeometry = new THREE.BufferGeometry();
         const starsMaterial = new THREE.PointsMaterial({
             color: 0xFFFFFF,
@@ -77,7 +74,6 @@
 
         camera.position.z = 5;
 
-        // Animation
         function animate() {
             requestAnimationFrame(animate);
             stars.rotation.x += 0.0001;
@@ -85,7 +81,6 @@
             renderer.render(scene, camera);
         }
 
-        // Handle window resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
