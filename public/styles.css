@@ -23,9 +23,9 @@ body {
 /* Main Containers */
 .container, .info-container {
     width: 35%;
-    height: 90vh;
+    height: 85vh;
     margin: 0;
-    padding: 20px;
+    padding: 15px;
     background: linear-gradient(135deg, 
         rgba(100, 255, 255, 0.05) 0%, 
         rgba(0, 22, 32, 0.8) 100%);
@@ -81,7 +81,7 @@ h1::before, h2::before, h3::before {
     flex: 1;
     border: 1px solid rgba(100, 255, 255, 0.2);
     border-radius: 10px;
-    padding: 20px;
+    padding: 15px;
     background: rgba(0, 22, 32, 0.6);
     overflow-y: auto;
     margin-bottom: 10px;
@@ -222,44 +222,50 @@ a:hover::after {
 /* Messages */
 .message {
     margin: 10px 0;
-    padding: 10px;
+    padding: 10px 15px;
     border-radius: 5px;
     animation: fadeIn 0.3s ease;
     background: rgba(0, 22, 32, 0.4);
     border-left: 2px solid var(--primary);
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
 }
 
 .commander-message {
     border-left-color: var(--accent);
+    color: #fff;
 }
 
 .astro-message {
     border-left-color: var(--primary-dark);
+    color: var(--primary);
 }
 
 /* Initialize Button */
 .initialize-button {
     position: fixed;
-    bottom: 30px;
+    bottom: 40px;  /* Increased from 30px */
     left: 50%;
     transform: translateX(-50%);
     padding: 0 30px;
-    height: 60px;
-    background: rgba(100, 255, 255, 0.1);
+    height: 50px;  /* Reduced from 60px */
+    background: rgba(0, 22, 32, 0.8);  /* Darker background */
     color: var(--primary);
-    border: 1px solid rgba(100, 255, 255, 0.3);
-    border-radius: 30px;
-    font-size: 16px;
-    letter-spacing: 2px;
+    border: 2px solid var(--primary);  /* Made border more visible */
+    border-radius: 25px;
+    font-size: 14px;  /* Reduced from 16px */
+    letter-spacing: 1px;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 100;
+    box-shadow: 0 0 15px rgba(100, 255, 255, 0.1);
 }
 
 .initialize-button:hover {
     background: rgba(100, 255, 255, 0.2);
-    box-shadow: var(--border-glow);
+    box-shadow: 0 0 20px rgba(100, 255, 255, 0.3);
     transform: translateX(-50%) translateY(-2px);
 }
 
