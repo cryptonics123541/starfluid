@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="stars-container"></div>
     <div class="container">
         <h1>ASTRO-7 Ship Terminal</h1>
 
@@ -24,10 +25,10 @@
         <h2 class="info-title">> SHIP RESOURCES</h2>
         <div class="info-section">
             <h3>> NAVIGATION</h3>
-            <p><a href="/schematics/ship.html" target="_blank">Ship Schematics</a></p>
-            <p><a href="/schematics/solar_system.html" target="_blank">Sol-1 (HOME)</a></p>
-            <p><a href="/schematics/black_hole.html" target="_blank">Black Hole</a></p>
-            <p><a href="/schematics/universe.html" target="_blank">Universe</a></p>
+            <p><a href="/schematics/ship.html">Ship Schematics</a></p>
+            <p><a href="/schematics/solar_system.html">Sol-1 (HOME)</a></p>
+            <p><a href="/schematics/black_hole.html">Black Hole</a></p>
+            <p><a href="/schematics/universe.html">Universe</a></p>
             <p><a href="/stars/stars.html">Stars Fluid Simulation</a></p>
         </div>
         <div class="info-section">
@@ -52,7 +53,7 @@
 
             const userMessage = document.createElement('div');
             userMessage.className = 'message commander-message';
-            userMessage.textContent = Commander: ${message};
+            userMessage.textContent = `Commander: ${message}`;
             chatContainer.appendChild(userMessage);
 
             const loadingDiv = document.createElement('div');
@@ -68,16 +69,16 @@
                     body: JSON.stringify({ message: message })
                 });
 
-                if (!response.ok) throw new Error(HTTP error! status: ${response.status});
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data = await response.json();
 
-                loadingDiv.innerHTML = ASTRO-7: ${data.response || 'System error - please try again'};
+                loadingDiv.innerHTML = `ASTRO-7: ${data.response || 'System error - please try again'}`;
                 loadingDiv.className = 'message astro-message';
 
             } catch (error) {
                 console.error('Error:', error);
-                loadingDiv.innerHTML = 'Error: Could not connect to ship systems. Please try again.';
-                loadingDiv.style.color = '#ff0000';
+                loadingDiv.innerHTML = 'ASTRO-7: Error - Could not connect to ship systems. Please try again.';
+                loadingDiv.className = 'message astro-message error';
             }
 
             chatContainer.scrollTop = chatContainer.scrollHeight;
