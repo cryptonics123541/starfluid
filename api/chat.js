@@ -1,7 +1,8 @@
 const { Anthropic } = require('@anthropic-ai/sdk');
 
+// Initialize Anthropic with error handling
 const anthropic = new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY,
+    apiKey: process.env.ANTHROPIC_API_KEY || '',
 });
 
 // Define the bot's personality and behavior
@@ -44,23 +45,38 @@ export default async function handler(req, res) {
         return res.status(405).json({ message: 'Method not allowed' });
     }
 
+    // Verify API key is present
+    if (!process.env.ANTHROPIC_API_KEY) {
+        console.error('Missing Anthropic API key');
+        return res.status(500).json({ message: 'Server configuration error' });
+    }
+
     try {
         const message = req.body.message;
         
         // Add user message to history
         conversationHistory.push({ role: "user", content: message });
         
-        // Keep only last 10 messages to avoid token limits
         if (conversationHistory.length > 10) {
             conversationHistory = conversationHistory.slice(-10);
         }
 
+        // Updated Anthropic API call with proper error handling
         const completion = await anthropic.messages.create({
             model: "claude-3-sonnet-20240229",
             max_tokens: 1000,
-            system: systemPrompt,
-            messages: conversationHistory
+            messages: [
+                {
+                    role: "system",
+                    content: systemPrompt
+                },
+                ...conversationHistory
+            ]
         });
+
+        if (!completion?.content?.[0]?.text) {
+            throw new Error('Invalid response format from Anthropic API');
+        }
 
         // Add AI response to history
         conversationHistory.push({ 
@@ -68,9 +84,12 @@ export default async function handler(req, res) {
             content: completion.content[0].text 
         });
 
-        res.status(200).json({ response: completion.content[0].text });
+        return res.status(200).json({ response: completion.content[0].text });
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ message: 'Error processing request' });
+        console.error('Anthropic API Error:', error);
+        return res.status(500).json({ 
+            message: 'Error processing request',
+            error: error.message 
+        });
     }
 } 

@@ -79,15 +79,18 @@
                     body: JSON.stringify({ message: message })
                 });
 
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.message || `HTTP error! status: ${response.status}`);
+                }
                 
                 loadingDiv.innerHTML = `ASTRO-7: ${data.response || 'System error - please try again'}`;
                 loadingDiv.className = 'message astro-message';
 
             } catch (error) {
                 console.error('Error:', error);
-                loadingDiv.innerHTML = 'Error: Could not connect to ship systems. Please try again.';
+                loadingDiv.innerHTML = `Error: ${error.message || 'Could not connect to ship systems. Please try again.'}`;
                 loadingDiv.style.color = '#ff0000';
             }
 
