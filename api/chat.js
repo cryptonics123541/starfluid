@@ -61,35 +61,44 @@ export default async function handler(req, res) {
             conversationHistory = conversationHistory.slice(-10);
         }
 
-        // Updated Anthropic API call with proper error handling
+        // Updated Anthropic API call structure for Claude 3
         const completion = await anthropic.messages.create({
             model: "claude-3-sonnet-20240229",
             max_tokens: 1000,
+            temperature: 0.7,
             messages: [
-                {
-                    role: "system",
-                    content: systemPrompt
+                { 
+                    role: "system", 
+                    content: systemPrompt 
                 },
-                ...conversationHistory
+                ...conversationHistory.map(msg => ({
+                    role: msg.role,
+                    content: msg.content
+                }))
             ]
         });
 
-        if (!completion?.content?.[0]?.text) {
-            throw new Error('Invalid response format from Anthropic API');
-        }
-
+        // Properly handle the Claude 3 response format
+        const responseText = completion.content[0].text;
+        
         // Add AI response to history
         conversationHistory.push({ 
             role: "assistant", 
-            content: completion.content[0].text 
+            content: responseText
         });
 
-        return res.status(200).json({ response: completion.content[0].text });
+        return res.status(200).json({ 
+            response: responseText,
+            status: 'success'
+        });
+
     } catch (error) {
         console.error('Anthropic API Error:', error);
+        
+        // Send a properly formatted error response
         return res.status(500).json({ 
-            message: 'Error processing request',
-            error: error.message 
+            message: error.message || 'Error processing request',
+            status: 'error'
         });
     }
 } 
