@@ -11,7 +11,9 @@
             margin: 0;
             overflow: hidden;
             background: #000;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
+        
         model-viewer {
             width: 100vw;
             height: 100vh;
@@ -20,6 +22,7 @@
             position: absolute;
             z-index: 2;
         }
+        
         #starfield {
             position: fixed;
             top: 0;
@@ -28,14 +31,47 @@
             height: 100%;
             z-index: 1;
         }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 1.2em;
+            z-index: 3;
+        }
+        
+        .progress-bar {
+            display: block;
+            width: 33%;
+            height: 10%;
+            max-height: 2px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate3d(-50%, -50%, 0);
+            border-radius: 25px;
+            box-shadow: 0px 3px 10px 3px rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            model-viewer {
+                --camera-orbit-sensitivity: 0.7;
+                --zoom-sensitivity: 0.5;
+            }
+        }
     </style>
 </head>
 <body>
     <canvas id="starfield"></canvas>
+    <div class="loading" id="loading">Loading Black Hole...</div>
     <model-viewer
         src="/models/black_hole.glb"
         camera-controls
         auto-rotate
+        rotation-per-second="30deg"
         camera-orbit="0deg 90deg 15m"
         min-camera-orbit="auto auto 5m"
         max-camera-orbit="auto auto 30m"
@@ -44,33 +80,57 @@
         environment-image="neutral"
         shadow-intensity="1"
         exposure="1.0"
-        interaction-prompt="none">
+        interaction-prompt="none"
+        loading="eager"
+        ar-status="not-presenting"
+        skybox-image="none"
+        camera-target="0m 0m 0m"
+        field-of-view="30deg"
+        interpolation-decay="200"
+        touch-action="pan-y"
+        aria-label="Interactive 3D model of a black hole"
+        draco-decoder-path="https://www.gstatic.com/draco/v1/decoders/">
+        <div class="progress-bar" slot="progress-bar"></div>
     </model-viewer>
 
     <script>
-        // Initialize Three.js scene
+        // WebGL support check
+        if (!window.WebGLRenderingContext) {
+            document.body.innerHTML = '<div style="color: white; text-align: center; padding: 20px;">Your browser does not support WebGL, which is required to view this content.</div>';
+            throw new Error('WebGL not supported');
+        }
+
+        // Initialize Three.js scene with optimized settings
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000);
         const renderer = new THREE.WebGLRenderer({
             canvas: document.getElementById('starfield'),
-            alpha: true
+            alpha: true,
+            antialias: false, // Disable antialiasing for better performance
+            powerPreference: "high-performance"
         });
+        
+        renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1);
         renderer.setSize(window.innerWidth, window.innerHeight);
 
-        // Create stars
+        // Optimized star creation
         const starsGeometry = new THREE.BufferGeometry();
         const starsMaterial = new THREE.PointsMaterial({
             color: 0xFFFFFF,
             size: 0.1,
-            transparent: true
+            transparent: true,
+            sizeAttenuation: true
         });
 
-        const starsVertices = [];
-        for(let i = 0; i < 10000; i++) {
-            const x = (Math.random() - 0.5) * 2000;
-            const y = (Math.random() - 0.5) * 2000;
-            const z = (Math.random() - 0.5) * 2000;
-            starsVertices.push(x, y, z);
+        // Create stars with optimized number based on device
+        const isMobile = window.innerWidth < 768;
+        const numberOfStars = isMobile ? 5000 : 10000;
+        const starsVertices = new Float32Array(numberOfStars * 3);
+        
+        for(let i = 0; i < numberOfStars * 3; i += 3) {
+            starsVertices[i] = (Math.random() - 0.5) * 2000;
+            starsVertices[i + 1] = (Math.random() - 0.5) * 2000;
+            starsVertices[i + 2] = (Math.random() - 0.5) * 2000;
         }
 
         starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
@@ -79,21 +139,53 @@
 
         camera.position.z = 5;
 
-        // Animation
-        function animate() {
+        // Optimized animation loop
+        let lastTime = 0;
+        const rotationSpeed = 0.0001;
+        
+        function animate(currentTime) {
             requestAnimationFrame(animate);
-            stars.rotation.x += 0.0001;
-            stars.rotation.y += 0.0001;
+            
+            // Skip frames if necessary
+            if (currentTime - lastTime < 16) { // Limit to ~60fps
+                return;
+            }
+            
+            stars.rotation.x += rotationSpeed;
+            stars.rotation.y += rotationSpeed;
             renderer.render(scene, camera);
+            
+            lastTime = currentTime;
         }
 
-        // Handle window resize
+        // Efficient resize handler
+        let resizeTimeout;
         window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            if (resizeTimeout) {
+                clearTimeout(resizeTimeout);
+            }
+            
+            resizeTimeout = setTimeout(() => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }, 250);
         });
 
+        // Model viewer event handling
+        const modelViewer = document.querySelector('model-viewer');
+        const loadingElement = document.getElementById('loading');
+
+        modelViewer.addEventListener('load', () => {
+            loadingElement.style.display = 'none';
+        });
+
+        modelViewer.addEventListener('error', (error) => {
+            console.error('Error loading model:', error);
+            loadingElement.textContent = 'Error loading model. Please refresh the page.';
+        });
+
+        // Start animation
         animate();
     </script>
 </body>
