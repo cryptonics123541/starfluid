@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="stars-container"></div>
+    
     <div class="container">
         <h1>ASTRO-7 Ship Terminal</h1>
         
@@ -28,13 +30,22 @@
             <p><a href="/schematics/solar_system.html" target="_blank">Sol-1 (HOME)</a></p>
             <p><a href="/schematics/black_hole.html" target="_blank">Black Hole</a></p>
             <p><a href="/schematics/universe.html" target="_blank">Universe</a></p>
-            <p><a href="/stars/stars.html">Stars Fluid Simulation</a></p>
         </div>
         <div class="info-section">
             <h3>> SHIP STATUS</h3>
             <p>Systems: ONLINE</p>
             <p>Location: DEEP SPACE</p>
             <p>Mission: ACTIVE</p>
+        </div>
+    </div>
+
+    <button id="initializeStars" class="initialize-button">Initialize Star Fluid</button>
+
+    <div class="schematic-modal" id="schematicModal">
+        <div class="schematic-content">
+            <span class="close-button">&times;</span>
+            <div id="model-container"></div>
+            <div class="model-credits">ASTRO-7 Schematic View</div>
         </div>
     </div>
 
@@ -88,6 +99,10 @@
                 e.preventDefault();
                 sendMessage();
             }
+        });
+
+        document.getElementById('initializeStars').addEventListener('click', function() {
+            window.location.href = '/stars/stars.html';
         });
     </script>
 </body>

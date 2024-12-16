@@ -1,29 +1,54 @@
+:root {
+    --primary: #64ffff;
+    --primary-dark: #00cccc;
+    --accent: #ff3860;
+    --bg-dark: #001620;
+    --bg-light: rgba(100, 255, 255, 0.05);
+    --border-glow: 0 0 15px rgba(100, 255, 255, 0.3);
+    --text-glow: 0 0 10px rgba(100, 255, 255, 0.5);
+}
+
 body {
     margin: 0;
     padding: 20px;
     font-family: 'Courier New', monospace;
-    background: #000000;
-    color: #00ffff;
+    background: var(--bg-dark);
+    color: var(--primary);
     position: relative;
     overflow: hidden;
     min-height: 100vh;
     perspective: 1000px;
 }
 
+/* Main Containers */
 .container, .info-container {
     width: 35%;
     height: 90vh;
     margin: 0;
     padding: 20px;
-    background: rgba(0, 0, 77, 0.75);
+    background: linear-gradient(135deg, 
+        rgba(100, 255, 255, 0.05) 0%, 
+        rgba(0, 22, 32, 0.8) 100%);
     border-radius: 15px;
-    box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
-    border: 2px solid rgba(0, 255, 255, 0.5);
     position: relative;
     z-index: 1;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
+}
+
+.container::before, .info-container::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(45deg, var(--primary), transparent, var(--primary));
+    border-radius: 15px;
+    z-index: -1;
+    opacity: 0.5;
+    animation: borderGlow 4s ease-in-out infinite;
 }
 
 .info-container {
@@ -32,31 +57,38 @@ body {
     top: 20px;
 }
 
+/* Headings */
 h1, h2, h3 {
-    color: #00ffff;
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    color: var(--primary);
+    text-shadow: var(--text-glow);
     margin-bottom: 20px;
     font-weight: bold;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    position: relative;
+    padding-left: 20px;
 }
 
 h1::before, h2::before, h3::before {
     content: ">";
-    margin-right: 10px;
-    color: #00ffff;
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    animation: blink 1.5s infinite;
 }
 
+/* Chat Container */
 .chat-container {
     flex: 1;
-    border: 2px solid rgba(0, 255, 255, 0.5);
+    border: 1px solid rgba(100, 255, 255, 0.2);
     border-radius: 10px;
     padding: 20px;
-    background: rgba(0, 0, 77, 0.6);
+    background: rgba(0, 22, 32, 0.6);
     overflow-y: auto;
     margin-bottom: 10px;
-    box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
+    box-shadow: inset 0 0 20px rgba(100, 255, 255, 0.1);
 }
 
+/* Input Area */
 .input-container {
     display: flex;
     gap: 10px;
@@ -68,83 +100,170 @@ h1::before, h2::before, h3::before {
 textarea {
     flex: 1;
     padding: 12px;
-    background: rgba(0, 0, 77, 0.8);
-    color: #00ffff;
-    border: 2px solid rgba(0, 255, 255, 0.5);
+    background: rgba(0, 22, 32, 0.8);
+    color: var(--primary);
+    border: 1px solid rgba(100, 255, 255, 0.3);
     border-radius: 8px;
     font-family: 'Courier New', monospace;
     resize: none;
     height: 100%;
     font-size: 14px;
     letter-spacing: 0.5px;
+    transition: all 0.3s ease;
 }
 
 textarea:focus {
     outline: none;
-    border-color: #00ffff;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    border-color: var(--primary);
+    box-shadow: var(--border-glow);
+    background: rgba(0, 22, 32, 0.9);
 }
 
+/* Buttons */
 button {
     width: 80px;
     height: 100%;
-    background: rgba(0, 0, 153, 0.6);
-    color: #00ffff;
-    border: 2px solid rgba(0, 255, 255, 0.5);
+    background: rgba(100, 255, 255, 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(100, 255, 255, 0.3);
     border-radius: 8px;
     cursor: pointer;
     font-family: 'Courier New', monospace;
     transition: all 0.2s ease;
     font-size: 14px;
     font-weight: bold;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--primary), transparent);
+    border-radius: 8px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 button:hover {
-    background: rgba(0, 0, 204, 0.8);
-    border-color: #00ffff;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    background: rgba(100, 255, 255, 0.2);
     transform: translateY(-2px);
+}
+
+button:hover::before {
+    opacity: 0.3;
 }
 
 button:active {
     transform: translateY(0);
 }
 
+/* Links */
 a {
-    color: #00ffff;
+    color: var(--primary);
     text-decoration: none;
     position: relative;
     padding: 2px 4px;
     transition: all 0.3s ease;
 }
 
+a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
 a:hover {
     color: #fff;
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    text-shadow: var(--text-glow);
 }
 
-a::before {
-    content: ">";
-    margin-right: 5px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
-a:hover::before {
-    opacity: 1;
-}
-
+/* Info Sections */
 .info-section {
     margin-bottom: 25px;
     padding: 15px;
-    border: 1px solid rgba(0, 255, 255, 0.3);
+    border: 1px solid rgba(100, 255, 255, 0.2);
     border-radius: 8px;
-    background: rgba(0, 0, 77, 0.4);
+    background: rgba(0, 22, 32, 0.4);
+    position: relative;
+    overflow: hidden;
 }
 
-/* 3D Viewer Modal Styles */
+.info-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--primary), transparent);
+    animation: scanline 2s linear infinite;
+}
+
+/* Messages */
+.message {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    animation: fadeIn 0.3s ease;
+    background: rgba(0, 22, 32, 0.4);
+    border-left: 2px solid var(--primary);
+}
+
+.commander-message {
+    border-left-color: var(--accent);
+}
+
+.astro-message {
+    border-left-color: var(--primary-dark);
+}
+
+/* Initialize Button */
+.initialize-button {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 30px;
+    height: 60px;
+    background: rgba(100, 255, 255, 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(100, 255, 255, 0.3);
+    border-radius: 30px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.initialize-button:hover {
+    background: rgba(100, 255, 255, 0.2);
+    box-shadow: var(--border-glow);
+    transform: translateX(-50%) translateY(-2px);
+}
+
+/* Modal Styles */
 .schematic-modal {
     display: none;
     position: fixed;
@@ -162,8 +281,8 @@ a:hover::before {
     width: 90%;
     height: 90%;
     position: relative;
-    background: rgba(0, 0, 51, 0.3);
-    border: 1px solid rgba(0, 255, 255, 0.3);
+    background: rgba(0, 22, 32, 0.3);
+    border: 1px solid rgba(100, 255, 255, 0.3);
     border-radius: 15px;
     backdrop-filter: blur(4px);
     padding: 20px;
@@ -173,7 +292,7 @@ a:hover::before {
     position: absolute;
     right: 20px;
     top: 10px;
-    color: #00ffff;
+    color: var(--primary);
     font-size: 30px;
     cursor: pointer;
     z-index: 1001;
@@ -199,15 +318,16 @@ a:hover::before {
     position: absolute;
     bottom: 20px;
     left: 20px;
-    color: #00ffff;
+    color: var(--primary);
     font-family: 'Courier New', monospace;
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    text-shadow: var(--text-glow);
     z-index: 2;
-    background: rgba(0, 0, 51, 0.6);
+    background: rgba(0, 22, 32, 0.6);
     padding: 5px 10px;
     border-radius: 5px;
 }
 
+/* Stars Background */
 #stars-container {
     position: fixed;
     top: 0;
@@ -228,40 +348,28 @@ a:hover::before {
     pointer-events: none;
 }
 
-.message {
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    animation: fadeIn 0.3s ease;
-}
-
-.commander-message {
-    background: rgba(0, 255, 255, 0.1);
-    border-left: 3px solid #00ffff;
-}
-
-.astro-message {
-    background: rgba(0, 77, 77, 0.2);
-    border-left: 3px solid #008080;
-}
-
-/* Scrollbar styles */
+/* Scrollbar Styling */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 77, 0.3);
-    border-radius: 4px;
+    background: rgba(0, 22, 32, 0.3);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(0, 255, 255, 0.5);
-    border-radius: 4px;
+    background: rgba(100, 255, 255, 0.3);
+    border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 255, 255, 0.7);
+    background: rgba(100, 255, 255, 0.5);
+}
+
+/* Animations */
+@keyframes borderGlow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
 }
 
 @keyframes fadeIn {
@@ -269,14 +377,18 @@ a:hover::before {
     to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes scanline {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
 .loading {
     display: inline-block;
     margin-left: 4px;
     animation: blink 1s infinite;
-}
-
-@keyframes blink {
-    0% { opacity: .2; }
-    50% { opacity: 1; }
-    100% { opacity: .2; }
 }
