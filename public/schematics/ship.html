@@ -11,71 +11,25 @@
             background: #0a1a4d;
             color: #00ffff;
             font-family: 'Courier New', monospace;
-            overflow: hidden;
         }
-
         model-viewer {
             width: 100vw;
             height: 100vh;
             background-color: #0a1a4d;
-            --progress-bar-color: #00ffff;
-            --progress-bar-height: 2px;
-        }
-
-        .loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.2em;
-            text-shadow: 0 0 10px #00ffff;
-            z-index: 1;
         }
     </style>
 </head>
 <body>
-    <div class="loading" id="loading">Loading ASTRO-7 Schematics...</div>
-    
     <model-viewer
         src="/models/harbinger.glb"
         camera-controls
         auto-rotate
-        camera-orbit="45deg 55deg 10m"
-        min-camera-orbit="auto 0deg 5m"
-        max-camera-orbit="auto 180deg 20m"
-        orbit-sensitivity="1"
-        zoom-sensitivity="1"
-        exposure="1"
-        shadow-intensity="0.5"
-        shadow-softness="0"
-        environment-image="legacy"
-        skybox-image="legacy"
-        loading="eager"
-        interaction-prompt="none"
-        camera-target="0m 0m 0m"
-        field-of-view="45deg"
-        interpolation-decay="200"
-        aria-label="Interactive 3D model of ASTRO-7 spaceship">
+        camera-orbit="45deg 55deg 3m"
+        environment-image="neutral"
+        shadow-intensity="1"
+        exposure="1.5"
+        shadow-softness="1"
+        interaction-prompt="none">
     </model-viewer>
-
-    <script>
-        const modelViewer = document.querySelector('model-viewer');
-        const loadingElement = document.getElementById('loading');
-
-        modelViewer.addEventListener('load', () => {
-            loadingElement.style.display = 'none';
-        });
-
-        modelViewer.addEventListener('error', (error) => {
-            console.error('Error loading model:', error);
-            loadingElement.textContent = 'Error loading schematics. Please refresh.';
-        });
-
-        // Ensure proper initial camera position
-        window.addEventListener('load', () => {
-            modelViewer.cameraOrbit = "45deg 55deg 10m";
-            modelViewer.fieldOfView = "45deg";
-        });
-    </script>
 </body>
 </html>
