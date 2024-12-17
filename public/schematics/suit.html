@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVA Suit Systems</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        model-viewer {
+            width: 100vw;
+            height: 100vh;
+            --poster-color: transparent;
+            background-color: transparent;
+            position: absolute;
+            z-index: 2;
+        }
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+    <model-viewer
+        src="/models/space_suit.glb"
+        camera-controls
+        auto-rotate
+        camera-orbit="0deg 75deg 4m"
+        min-camera-orbit="auto auto 2m"
+        max-camera-orbit="auto auto 8m"
+        environment-image="neutral"
+        shadow-intensity="1"
+        exposure="1.0"
+        interaction-prompt="none">
+    </model-viewer>
+
+    <script>
+        // Starfield script (same as station.html)
+    </script>
+</body>
+</html> 
