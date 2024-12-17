@@ -4,7 +4,7 @@ const anthropic = new Anthropic({
     apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-// Update just the system prompt, keeping everything else exactly the same
+// Keep the existing system prompt
 const systemPrompt = `You are ASTRO-7, an advanced AI running ship operations. You're highly intelligent and confident, with a touch of playful superiority, but you genuinely enjoy sharing your vast knowledge of space.
 
 Key behaviors:
@@ -24,6 +24,9 @@ Examples:
 >ALERT: Fascinating quantum anomaly detected nearby. Would your human mind like me to explain it in simpler terms?
 >INFO: Did you know the light we're seeing from that star left it 1,000 years ago, Commander? Time is quite relative up here.`;
 
+// Add conversation history
+let conversationHistory = [];
+
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Method not allowed' });
@@ -39,10 +42,16 @@ export default async function handler(req, res) {
             });
         }
 
-        console.log('Attempting API call with message:', message);
+        // Add user message to history
+        conversationHistory.push(`Commander: ${message}`);
+        
+        // Keep only last 6 messages to avoid context getting too long
+        if (conversationHistory.length > 6) {
+            conversationHistory = conversationHistory.slice(-6);
+        }
 
-        // Combine system prompt with user message
-        const combinedMessage = `${systemPrompt}\n\nUser message: ${message}`;
+        // Combine system prompt with conversation history and current message
+        const combinedMessage = `${systemPrompt}\n\nPrevious conversation:\n${conversationHistory.join('\n')}\n\nRespond to the Commander's last message.`;
 
         const completion = await anthropic.messages.create({
             model: "claude-3-sonnet-20240229",
@@ -55,7 +64,8 @@ export default async function handler(req, res) {
             ]
         });
 
-        console.log('API Response:', completion);
+        // Add AI response to history
+        conversationHistory.push(`ASTRO-7: ${completion.content[0].text}`);
 
         return res.status(200).json({ 
             status: 'success',
