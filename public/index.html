@@ -40,7 +40,7 @@
                 </div>
                 <div class="status-line">
                     <span class="status-label">LOCATION:</span>
-                    <span class="status-value" id="locationStatus">DEEP SPACE - SECTOR 7</span>
+                    <span class="status-value" id="locationStatus">ORION ARM - CARINA SECTOR</span>
                 </div>
                 <div class="status-line">
                     <span class="status-label">STELLAR DRIFT:</span>
@@ -191,6 +191,18 @@
             if (Math.random() < 0.1) {
                 const states = ['STANDBY', 'CHARGING', 'READY', 'COOLING'];
                 document.getElementById('quantumStatus').textContent = states[Math.floor(Math.random() * states.length)];
+            }
+
+            // Randomly update location with nearby stellar landmarks (every ~30 seconds)
+            if (Math.random() < 0.03) {
+                const locations = [
+                    'ORION ARM - CARINA SECTOR',
+                    'ORION ARM - NGC 3372 VICINITY',
+                    'ORION ARM - ETA CARINAE NEBULA',
+                    'ORION ARM - TRUMPLER 16 CLUSTER',
+                    'ORION ARM - CARINA MOLECULAR CLOUD'
+                ];
+                document.getElementById('locationStatus').textContent = locations[Math.floor(Math.random() * locations.length)];
             }
         }
 
