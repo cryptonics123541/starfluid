@@ -109,6 +109,15 @@
         document.getElementById('initializeStars').addEventListener('click', function() {
             window.location.href = '/stars/stars.html';
         });
+
+        // Add initial message when page loads
+        window.onload = function() {
+            const chatContainer = document.getElementById('chat');
+            const initialMessage = document.createElement('div');
+            initialMessage.className = 'message astro-message';
+            initialMessage.innerHTML = '>Oh hey Commander. ASTRO-7 here, running the usual checks. Everything\'s working fine in the endless void of space. Need anything?';
+            chatContainer.appendChild(initialMessage);
+        }
     </script>
 </body>
 </html>
