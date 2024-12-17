@@ -268,3 +268,33 @@ button:hover {
         margin: 20px auto;
     }
 }
+
+/* Update the initialize button styles */
+.initialize-button {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 30px;
+    height: 40px;
+    background: rgba(100, 255, 255, 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(100, 255, 255, 0.3);
+    border-radius: 8px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.initialize-button:hover {
+    background: rgba(100, 255, 255, 0.2);
+    box-shadow: var(--border-glow);
+    transform: translateX(-50%) translateY(-2px);
+}
+
+.initialize-button:active {
+    transform: translateX(-50%) translateY(0);
+}
