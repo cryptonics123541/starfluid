@@ -22,6 +22,8 @@ body {
 
 .container {
     width: 35%;
+    min-width: 320px;
+    max-width: 600px;
     height: 90vh;
     margin: 0;
     padding: 20px;
@@ -54,6 +56,8 @@ body {
 
 .info-container {
     width: 35%;
+    min-width: 320px;
+    max-width: 600px;
     height: 90vh;
     position: fixed;
     right: 20px;
@@ -278,25 +282,75 @@ button:hover {
 }
 
 /* Responsive Design */
+@media (max-width: 1400px) {
+    .container, .info-container {
+        width: 40%;
+    }
+}
+
 @media (max-width: 1200px) {
     .container, .info-container {
         width: 45%;
     }
+    
+    .initialize-button {
+        width: 25%;
+    }
 }
 
-@media (max-width: 768px) {
-    .container {
-        width: 90%;
-        height: 60vh;
+@media (max-width: 900px) {
+    body {
+        padding: 10px;
     }
-    
-    .info-container {
+
+    .container, .info-container {
         width: 90%;
-        height: auto;
-        position: relative;
-        right: auto;
-        top: auto;
+        position: static;
         margin: 20px auto;
+        height: auto;
+        min-height: 50vh;
+    }
+
+    .container {
+        margin-bottom: 20px;
+    }
+
+    .chat-container {
+        height: 50vh;
+    }
+
+    .initialize-button {
+        position: static;
+        width: 90%;
+        max-width: 400px;
+        margin: 20px auto;
+        transform: none;
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+
+    .container, .info-container {
+        padding: 10px;
+    }
+
+    .status-line {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 8px 0;
+    }
+
+    .status-value {
+        margin-top: 4px;
+        margin-left: 20px;
+    }
+
+    .terminal-status {
+        padding: 10px;
     }
 }
 
