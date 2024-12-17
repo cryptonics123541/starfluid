@@ -31,6 +31,9 @@ async function updateMarketCap() {
             }).format(marketCap);
 
             document.getElementById('marketCap').textContent = formattedMarketCap;
+            
+            // Check milestones
+            checkMilestones(marketCap);
         } else {
             throw new Error('Invalid data received');
         }
@@ -38,6 +41,27 @@ async function updateMarketCap() {
         console.error('Error fetching data:', error);
         document.getElementById('marketCap').textContent = 'Error loading data';
     }
+}
+
+function checkMilestones(marketCap) {
+    const lockedLinks = document.querySelectorAll('a.locked');
+    lockedLinks.forEach(link => {
+        const milestone = parseInt(link.dataset.milestone);
+        if (marketCap >= milestone) {
+            link.classList.remove('locked');
+            link.classList.add('unlocked');
+            // Optional: Show notification
+            showUnlockNotification(link.textContent);
+        }
+    });
+}
+
+function showUnlockNotification(itemName) {
+    const message = document.createElement('div');
+    message.className = 'message astro-message';
+    message.innerHTML = `>ALERT: New schematic unlocked - ${itemName}`;
+    document.getElementById('chat').appendChild(message);
+    document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
 }
 
 // Update every 15 seconds
