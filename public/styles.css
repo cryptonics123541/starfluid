@@ -446,7 +446,7 @@ button:hover {
     100% { opacity: 1; }
 }
 
-.market-cap-container {
+.market-container {
     position: fixed;
     top: 20px;
     left: 50%;
@@ -459,13 +459,17 @@ button:hover {
     font-family: 'Courier New', monospace;
     z-index: 1000;
     box-shadow: var(--border-glow);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.market-cap-label {
+.market-cap-label, .price-label {
     color: var(--primary-dark);
+    margin-right: 10px;
 }
 
-.market-cap-value {
+.market-cap-value, .price-value {
     color: var(--primary);
     text-shadow: var(--text-glow);
 }
