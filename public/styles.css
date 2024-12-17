@@ -219,9 +219,12 @@ button:hover {
 }
 
 .info-section a.locked::after {
-    content: ' 🔒';
+    content: ' 🔒 ' attr(data-milestone-display);
     position: absolute;
     right: 15px;
+    font-size: 0.9em;
+    opacity: 0.8;
+    color: var(--primary-dark);
 }
 
 .info-section a.unlocked {
@@ -495,4 +498,9 @@ button:hover {
 .market-cap-value, .price-value {
     color: var(--primary);
     text-shadow: var(--text-glow);
+}
+
+/* Hide milestone display when unlocked */
+.info-section a.unlocked::after {
+    content: none;
 }
