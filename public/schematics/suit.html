@@ -39,20 +39,24 @@
         camera-orbit="0deg 75deg 4m"
         min-camera-orbit="auto auto 2m"
         max-camera-orbit="auto auto 8m"
-        environment-image="neutral"
-        skybox-image="neutral"
-        exposure="0.8"
-        shadow-intensity="0"
-        shadow-softness="0"
-        ambient-occlusion="false"
-        camera-target="0m 1m 0m"
-        auto-rotate-delay="0"
-        rotation-per-second="30deg"
+        environment-image="legacy"
+        shadow-intensity="0.8"
+        exposure="0.9"
         interaction-prompt="none"
-        background-color="#1a1a1a">
+        id="suit-model">
     </model-viewer>
 
     <script>
+        const modelViewer = document.querySelector('#suit-model');
+        
+        modelViewer.addEventListener('error', (error) => {
+            console.error('Error loading model:', error);
+        });
+
+        modelViewer.addEventListener('load', () => {
+            console.log('Model loaded successfully');
+        });
+
         // Starfield script (same as station.html)
     </script>
 </body>
