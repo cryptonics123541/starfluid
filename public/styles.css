@@ -272,12 +272,13 @@ button:hover {
 /* Update the initialize button styles */
 .initialize-button {
     position: fixed;
-    bottom: 40px;
+    bottom: calc(20px + 5vh);
     left: 50%;
     transform: translateX(-50%);
     padding: 0 30px;
     height: 50px;
-    min-width: 200px;
+    min-width: 300px;
+    width: 25%;
     background: linear-gradient(135deg, 
         rgba(100, 255, 255, 0.05) 0%, 
         rgba(0, 22, 32, 0.8) 100%);
@@ -291,6 +292,9 @@ button:hover {
     transition: all 0.3s ease;
     z-index: 100;
     backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .initialize-button::before {
