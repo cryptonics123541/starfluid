@@ -65,7 +65,7 @@ function showUnlockNotification(itemName) {
 }
 
 // Update every 15 seconds
-setInterval(updateMarketCap, 15000);
+setInterval(updateMarketCap, 1500000);
 
 // Initial update
 updateMarketCap();
