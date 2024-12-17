@@ -28,8 +28,8 @@
             <h3>> NAVIGATION</h3>
             <p><a href="/schematics/ship.html" target="_blank">Ship Schematics</a></p>
             <p><a href="/schematics/solar_system.html" target="_blank">Sol-1 (HOME)</a></p>
-            <p><a href="/schematics/black_hole.html" target="_blank">Black Hole</a></p>
-            <p><a href="/schematics/universe.html" target="_blank">Universe</a></p>
+            <p><a href="/schematics/black_hole.html" target="_blank">Sagittarius A* Anomaly</a></p>
+            <p><a href="/schematics/universe.html" target="_blank">Deep Field Observatory</a></p>
         </div>
         <div class="info-section">
             <h3>> SHIP STATUS</h3>
@@ -43,8 +43,8 @@
                     <span class="status-value" id="locationStatus">DEEP SPACE - SECTOR 7</span>
                 </div>
                 <div class="status-line">
-                    <span class="status-label">COORDINATES:</span>
-                    <span class="status-value" id="coordinates">X: 2847.23 Y: -1123.45 Z: 892.01</span>
+                    <span class="status-label">STELLAR DRIFT:</span>
+                    <span class="status-value" id="coordinates">φ: 147.23° θ: -32.45° r: 892.01ly</span>
                 </div>
                 <div class="status-line">
                     <span class="status-label">HULL INTEGRITY:</span>
@@ -161,17 +161,31 @@
                 z: (892 + Math.random() * 2).toFixed(2)
             };
 
-            // Update mission time
+            // Calculate mission time starting from a fixed past date
+            const missionStart = new Date('2024-01-01T00:00:00');
             const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const diff = now - missionStart;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+            const minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
+            const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+
+            document.getElementById('missionTime').textContent = `${days}:${hours}:${minutes}:${seconds}`;
+
+            // Update stellar drift with smooth transitions
+            const drift = {
+                phi: (147 + Math.sin(Date.now() / 10000) * 2).toFixed(2),
+                theta: (-32 + Math.cos(Date.now() / 12000) * 1.5).toFixed(2),
+                radius: (892 + Math.sin(Date.now() / 15000) * 3).toFixed(2)
+            };
+            
+            document.getElementById('coordinates').textContent = 
+                `φ: ${drift.phi}° θ: ${drift.theta}° r: ${drift.radius}ly`;
 
             // Update the DOM
             document.getElementById('powerStatus').textContent = `${power}%`;
             document.getElementById('hullStatus').textContent = `${hull}%`;
             document.getElementById('coordinates').textContent = `X: ${coords.x} Y: ${coords.y} Z: ${coords.z}`;
-            document.getElementById('missionTime').textContent = `${hours}:${minutes}:${seconds}`;
             
             // Randomly update quantum drive status
             if (Math.random() < 0.1) {
