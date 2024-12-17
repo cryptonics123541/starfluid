@@ -29,7 +29,9 @@ body {
         rgba(100, 255, 255, 0.05) 0%, 
         rgba(0, 22, 32, 0.8) 100%);
     border-radius: 15px;
-    position: relative;
+    position: fixed;
+    left: 20px;
+    top: 20px;
     z-index: 1;
     backdrop-filter: blur(10px);
     display: flex;
@@ -53,7 +55,7 @@ body {
 .info-container {
     width: 35%;
     height: 90vh;
-    position: absolute;
+    position: fixed;
     right: 20px;
     top: 20px;
     padding: 20px;
@@ -61,7 +63,6 @@ body {
         rgba(100, 255, 255, 0.05) 0%, 
         rgba(0, 22, 32, 0.8) 100%);
     border-radius: 15px;
-    position: relative;
     z-index: 1;
     backdrop-filter: blur(10px);
 }
