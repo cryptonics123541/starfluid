@@ -5,7 +5,7 @@ const anthropic = new Anthropic({
 });
 
 // Simple system prompt for testing
-const systemPrompt = `You are ASTRO-7, a helpful AI assistant. Respond briefly and clearly.`;
+const systemPrompt = `You are ASTRO-7, an advanced AI running ship operations. Keep responses brief and use ">" for important info. Example: ">STATUS: All systems operational. How can I assist you, Commander?"`;
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -28,6 +28,10 @@ export default async function handler(req, res) {
             model: "claude-3-sonnet-20240229",
             max_tokens: 1000,
             messages: [
+                {
+                    role: "system",
+                    content: systemPrompt
+                },
                 {
                     role: "user",
                     content: message
