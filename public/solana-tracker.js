@@ -21,7 +21,6 @@ async function updateMarketCap() {
         
         if (data.success && data.data) {
             const marketCap = data.data.marketcap;
-            const price = data.data.price;
 
             // Format the market cap
             const formattedMarketCap = new Intl.NumberFormat('en-US', {
@@ -31,28 +30,17 @@ async function updateMarketCap() {
                 maximumFractionDigits: 0
             }).format(marketCap);
 
-            // Format the price with more decimal places
-            const formattedPrice = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 8,
-                maximumFractionDigits: 8
-            }).format(price);
-
-            // Update both market cap and price in the HTML
             document.getElementById('marketCap').textContent = formattedMarketCap;
-            document.getElementById('tokenPrice').textContent = formattedPrice;
         } else {
             throw new Error('Invalid data received');
         }
     } catch (error) {
         console.error('Error fetching data:', error);
         document.getElementById('marketCap').textContent = 'Error loading data';
-        document.getElementById('tokenPrice').textContent = 'Error loading data';
     }
 }
 
-// Update every 15 seconds to match your friend's implementation
+// Update every 15 seconds
 setInterval(updateMarketCap, 15000);
 
 // Initial update
