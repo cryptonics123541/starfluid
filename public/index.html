@@ -33,9 +33,40 @@
         </div>
         <div class="info-section">
             <h3>> SHIP STATUS</h3>
-            <p>Systems: ONLINE</p>
-            <p>Location: DEEP SPACE</p>
-            <p>Mission: ACTIVE</p>
+            <div class="terminal-status">
+                <div class="status-line">
+                    <span class="status-label">MAIN SYSTEMS:</span>
+                    <span class="status-value" id="mainStatus">ONLINE</span>
+                </div>
+                <div class="status-line">
+                    <span class="status-label">LOCATION:</span>
+                    <span class="status-value" id="locationStatus">DEEP SPACE - SECTOR 7</span>
+                </div>
+                <div class="status-line">
+                    <span class="status-label">COORDINATES:</span>
+                    <span class="status-value" id="coordinates">X: 2847.23 Y: -1123.45 Z: 892.01</span>
+                </div>
+                <div class="status-line">
+                    <span class="status-label">HULL INTEGRITY:</span>
+                    <span class="status-value" id="hullStatus">98.7%</span>
+                </div>
+                <div class="status-line">
+                    <span class="status-label">POWER LEVELS:</span>
+                    <span class="status-value" id="powerStatus">92.3%</span>
+                </div>
+                <div class="status-line">
+                    <span class="status-label">LIFE SUPPORT:</span>
+                    <span class="status-value" id="lifeSupportStatus">OPTIMAL</span>
+                </div>
+                <div class="status-line">
+                    <span class="status-label">MISSION TIME:</span>
+                    <span class="status-value" id="missionTime">147:23:45</span>
+                </div>
+                <div class="status-line">
+                    <span class="status-label">QUANTUM DRIVE:</span>
+                    <span class="status-value" id="quantumStatus">STANDBY</span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -118,6 +149,42 @@
             initialMessage.innerHTML = '>Oh hey Commander. ASTRO-7 here, running the usual checks. Everything\'s working fine in the endless void of space. Need anything?';
             chatContainer.appendChild(initialMessage);
         }
+
+        // Ship status update function
+        function updateShipStatus() {
+            // Simulate random fluctuations in values
+            const power = (90 + Math.random() * 10).toFixed(1);
+            const hull = (95 + Math.random() * 5).toFixed(1);
+            const coords = {
+                x: (2847 + Math.random() * 2).toFixed(2),
+                y: (-1123 + Math.random() * 2).toFixed(2),
+                z: (892 + Math.random() * 2).toFixed(2)
+            };
+
+            // Update mission time
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            // Update the DOM
+            document.getElementById('powerStatus').textContent = `${power}%`;
+            document.getElementById('hullStatus').textContent = `${hull}%`;
+            document.getElementById('coordinates').textContent = `X: ${coords.x} Y: ${coords.y} Z: ${coords.z}`;
+            document.getElementById('missionTime').textContent = `${hours}:${minutes}:${seconds}`;
+            
+            // Randomly update quantum drive status
+            if (Math.random() < 0.1) {
+                const states = ['STANDBY', 'CHARGING', 'READY', 'COOLING'];
+                document.getElementById('quantumStatus').textContent = states[Math.floor(Math.random() * states.length)];
+            }
+        }
+
+        // Update status every second
+        setInterval(updateShipStatus, 1000);
+
+        // Initial update
+        updateShipStatus();
     </script>
 </body>
 </html>
