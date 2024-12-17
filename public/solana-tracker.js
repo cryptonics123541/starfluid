@@ -1,21 +1,37 @@
-const BIRDEYE_API_KEY = 'e0a89b79c44147e8ba7aa65dd40a6141';
-const TOKEN_ADDRESS = '75jjoQxJ6LdgyD4QVdDVAJeehYAn9c1RpNvfjXD27Rj2'; // Your token address
+// solana-tracker.js
+
+const BIRDEYE_API_KEY = "e0a89b79c44147e8ba7aa65dd40a6141";
+const TOKEN_ADDRESS = "75jjoQxJ6LdgyD4QVdDVAJeehYAn9c1RpNvfjXD27Rj2";
 
 async function updateMarketCap() {
     try {
-        const response = await fetch(`https://public-api.birdeye.so/public/token_price/${TOKEN_ADDRESS}`, {
-            method: 'GET',
-            headers: {
-                'X-API-KEY': BIRDEYE_API_KEY,
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+        const response = await fetch(
+            `https://public-api.birdeye.so/defi/v3/token/market-data?address=${TOKEN_ADDRESS}`,
+            {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'x-api-key': BIRDEYE_API_KEY,
+                    'x-chain': 'solana'
+                }
             }
-        });
+        );
 
         const data = await response.json();
         
-        if (data && data.success && data.data) {
-            const price = data.data.value;
+        if (data.success && data.data) {
+            const marketCap = data.data.marketcap;
+            const price = data.data.price;
+
+            // Format the market cap
+            const formattedMarketCap = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(marketCap);
+
+            // Format the price with more decimal places
             const formattedPrice = new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD',
@@ -23,18 +39,21 @@ async function updateMarketCap() {
                 maximumFractionDigits: 8
             }).format(price);
 
-            document.getElementById('marketCap').textContent = formattedPrice;
+            // Update both market cap and price in the HTML
+            document.getElementById('marketCap').textContent = formattedMarketCap;
+            document.getElementById('tokenPrice').textContent = formattedPrice;
         } else {
             throw new Error('Invalid data received');
         }
     } catch (error) {
-        console.error('Error fetching price:', error);
+        console.error('Error fetching data:', error);
         document.getElementById('marketCap').textContent = 'Error loading data';
+        document.getElementById('tokenPrice').textContent = 'Error loading data';
     }
 }
 
-// Update every 30 seconds
-setInterval(updateMarketCap, 30000);
+// Update every 15 seconds to match your friend's implementation
+setInterval(updateMarketCap, 15000);
 
 // Initial update
-updateMarketCap(); 
+updateMarketCap();
