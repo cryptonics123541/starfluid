@@ -1,9 +1,17 @@
+:root {
+    --primary: #00ffff;
+    --primary-dark: #008b8b;
+    --background: #000000;
+    --text: #00ffff;
+    --error: #ff0000;
+}
+
 body {
     margin: 0;
     padding: 20px;
     font-family: 'Courier New', monospace;
-    background: #000000;
-    color: #00ffff;
+    background: var(--background);
+    color: var(--text);
     position: relative;
     overflow: hidden;
     min-height: 100vh;
@@ -15,10 +23,10 @@ body {
     height: 90vh;
     margin: 0;
     padding: 20px;
-    background: rgba(0, 0, 51, 0.3);
+    background: rgba(0, 22, 32, 0.3);
     border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-    border: 1px solid rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(100, 255, 255, 0.1);
+    border: 1px solid rgba(100, 255, 255, 0.3);
     position: relative;
     z-index: 1;
     backdrop-filter: blur(4px);
@@ -33,22 +41,40 @@ body {
     right: 20px;
     top: 20px;
     padding: 20px;
-    background: rgba(0, 0, 51, 0.3);
+    background: rgba(0, 22, 32, 0.3);
     border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-    border: 1px solid rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(100, 255, 255, 0.1);
+    border: 1px solid rgba(100, 255, 255, 0.3);
     z-index: 1;
     backdrop-filter: blur(4px);
 }
 
 .chat-container {
     flex: 1;
-    border: 1px solid rgba(0, 255, 255, 0.3);
+    border: 1px solid rgba(100, 255, 255, 0.3);
     border-radius: 10px;
     padding: 20px;
-    background: rgba(0, 0, 51, 0.35);
+    background: rgba(0, 22, 32, 0.35);
     overflow-y: auto;
     margin-bottom: 10px;
+}
+
+.message {
+    margin: 10px 0;
+    padding: 8px;
+    border-radius: 5px;
+    background: rgba(0, 22, 32, 0.4);
+    border: 1px solid rgba(100, 255, 255, 0.2);
+}
+
+.commander-message {
+    color: var(--primary);
+    margin-left: 20px;
+}
+
+.astro-message {
+    color: #00ff00;
+    margin-right: 20px;
 }
 
 .input-container {
@@ -62,9 +88,9 @@ body {
 textarea {
     flex: 1;
     padding: 12px;
-    background: rgba(0, 0, 51, 0.4);
-    color: #00ffff;
-    border: 1px solid rgba(0, 255, 255, 0.3);
+    background: rgba(0, 22, 32, 0.4);
+    color: var(--text);
+    border: 1px solid rgba(100, 255, 255, 0.3);
     border-radius: 8px;
     font-family: 'Courier New', monospace;
     resize: none;
@@ -73,16 +99,16 @@ textarea {
 
 textarea:focus {
     outline: none;
-    border-color: rgba(0, 255, 255, 0.6);
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    border-color: rgba(100, 255, 255, 0.6);
+    box-shadow: 0 0 15px rgba(100, 255, 255, 0.2);
 }
 
 button {
     width: 80px;
     height: 100%;
-    background: rgba(0, 0, 102, 0.4);
-    color: #00ffff;
-    border: 1px solid rgba(0, 255, 255, 0.3);
+    background: rgba(0, 22, 32, 0.4);
+    color: var(--text);
+    border: 1px solid rgba(100, 255, 255, 0.3);
     border-radius: 8px;
     cursor: pointer;
     font-family: 'Courier New', monospace;
@@ -90,9 +116,31 @@ button {
 }
 
 button:hover {
-    background: rgba(0, 0, 153, 0.6);
-    border-color: rgba(0, 255, 255, 0.6);
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    background: rgba(0, 22, 32, 0.6);
+    border-color: rgba(100, 255, 255, 0.6);
+    box-shadow: 0 0 15px rgba(100, 255, 255, 0.2);
+}
+
+/* Add these after the base styles */
+
+.info-section {
+    margin: 20px 0;
+}
+
+.info-section h3 {
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.info-section a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.info-section a:hover {
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(100, 255, 255, 0.5);
 }
 
 /* 3D Viewer Modal Styles */
@@ -113,8 +161,8 @@ button:hover {
     width: 90%;
     height: 90%;
     position: relative;
-    background: rgba(0, 0, 51, 0.3);
-    border: 1px solid rgba(0, 255, 255, 0.3);
+    background: rgba(0, 22, 32, 0.3);
+    border: 1px solid rgba(100, 255, 255, 0.3);
     border-radius: 15px;
     backdrop-filter: blur(4px);
     padding: 20px;
@@ -124,7 +172,7 @@ button:hover {
     position: absolute;
     right: 20px;
     top: 10px;
-    color: #00ffff;
+    color: var(--primary);
     font-size: 30px;
     cursor: pointer;
     z-index: 1001;
@@ -132,31 +180,6 @@ button:hover {
 
 .close-button:hover {
     color: #fff;
-}
-
-#model-container {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-}
-
-#model-container canvas {
-    width: 100% !important;
-    height: 100% !important;
-    border-radius: 10px;
-}
-
-.model-credits {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: #00ffff;
-    font-family: 'Courier New', monospace;
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-    z-index: 2;
-    background: rgba(0, 0, 51, 0.6);
-    padding: 5px 10px;
-    border-radius: 5px;
 }
 
 #stars-container {
@@ -179,11 +202,6 @@ button:hover {
     pointer-events: none;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
 .loading {
     display: inline-block;
     margin-left: 4px;
@@ -194,4 +212,27 @@ button:hover {
     0% { opacity: .2; }
     50% { opacity: 1; }
     100% { opacity: .2; }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .container, .info-container {
+        width: 45%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        height: 60vh;
+    }
+    
+    .info-container {
+        width: 90%;
+        height: auto;
+        position: relative;
+        right: auto;
+        top: auto;
+        margin: 20px auto;
+    }
 }
