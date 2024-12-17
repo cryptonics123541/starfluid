@@ -85,8 +85,14 @@
         </div>
     </div>
 
+    <div class="market-cap-container">
+        <span class="market-cap-label">YOUR_TOKEN MARKET CAP: </span>
+        <span class="market-cap-value" id="marketCap">Loading...</span>
+    </div>
+
     <!-- Scripts -->
     <script src="stars.js"></script>
+    <script src="solana-tracker.js"></script>
     <script>
         async function sendMessage() {
             const userInput = document.getElementById('userInput');

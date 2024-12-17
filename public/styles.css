@@ -445,3 +445,27 @@ button:hover {
     50% { opacity: 0.5; }
     100% { opacity: 1; }
 }
+
+.market-cap-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 22, 32, 0.8);
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    font-family: 'Courier New', monospace;
+    z-index: 1000;
+    box-shadow: var(--border-glow);
+}
+
+.market-cap-label {
+    color: var(--primary-dark);
+}
+
+.market-cap-value {
+    color: var(--primary);
+    text-shadow: var(--text-glow);
+}
