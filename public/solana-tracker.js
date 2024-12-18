@@ -1,6 +1,6 @@
 // solana-tracker.js
 
-const BIRDEYE_API_KEY = "e0a89b79c44147e8ba7aa65dd40a6141";
+const BIRDEYE_API_KEY = "65CFQVF1tfDMAtXrGDZR61M24D6eWrA8FpCDg44Jpump";
 const TOKEN_ADDRESS = "MHMp4EjPYL3GrgKbRU9RxipHh8RiYrnH2s1s83kpump";
 
 async function updateMarketCap() {
@@ -65,7 +65,7 @@ function showUnlockNotification(itemName) {
 }
 
 // Update every 15 seconds
-setInterval(updateMarketCap, 1500000);
+setInterval(updateMarketCap, 15000);
 
 // Initial update
 updateMarketCap();
