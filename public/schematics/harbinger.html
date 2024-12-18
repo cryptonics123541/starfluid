@@ -3,71 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ship Schematics</title>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <link rel="stylesheet" href="../styles.css">
+    <title>ASTRO-7 Ship Schematics</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
     <style>
         body {
             margin: 0;
-            padding: 0;
-            background: var(--bg-dark);
-            min-height: 100vh;
             overflow: hidden;
-        }
-
-        .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            background: var(--bg-dark);
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            border-radius: 8px;
+            background: #1c4e7a;
+            color: #00ffff;
             font-family: 'Courier New', monospace;
-            text-decoration: none;
-            z-index: 1000;
-        }
-
-        .back-button:hover {
-            background: rgba(100, 255, 255, 0.1);
-        }
-
-        #model-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: transparent;
         }
 
         model-viewer {
-            width: 100%;
-            height: 100%;
-            --poster-color: transparent;
-            background-color: transparent;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0a1a4d;
         }
     </style>
 </head>
 <body>
-    <div id="stars-container"></div>
-    <a href="../index.html" class="back-button">Return to Console</a>
-    <div id="model-container">
-        <model-viewer 
-            src="../models/harbinger.glb"
-            camera-controls
-            auto-rotate
-            camera-orbit="45deg 55deg 3m"
-            exposure="1"
-            shadow-intensity="1"
-            environment-image="../models/spaced_hdr.jpg"
-            shadow-softness="0"
-            auto-rotate-delay="0"
-            rotation-per-second="30deg"
-            interaction-prompt="none">
-        </model-viewer>
-    </div>
-    <script src="../stars.js"></script>
+    <model-viewer 
+        src="/models/harbinger.glb"
+        camera-controls
+        auto-rotate
+        camera-orbit="45deg 55deg 3m"
+        environment-image="neutral"
+        shadow-intensity="1"
+        exposure="1.5"
+        shadow-softness="1"
+        interaction-prompt="none">
+    </model-viewer>
 </body>
 </html> 
