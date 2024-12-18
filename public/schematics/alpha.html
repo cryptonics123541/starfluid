@@ -3,46 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orbital Station Alpha</title>
-    <link rel="stylesheet" href="../styles.css">
+    <title>ASTRO-7 Station Schematics</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
     <style>
-        .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, 
-                rgba(100, 255, 255, 0.05) 0%, 
-                rgba(0, 22, 32, 0.8) 100%);
-            color: var(--primary);
-            border: 1px solid rgba(100, 255, 255, 0.3);
-            border-radius: 8px;
-            cursor: pointer;
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #1c4e7a;
+            color: #00ffff;
             font-family: 'Courier New', monospace;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
         }
 
-        .back-button:hover {
-            background: rgba(100, 255, 255, 0.1);
-            border-color: var(--primary);
-            box-shadow: var(--border-glow);
-            transform: translateY(-2px);
-        }
-
-        .back-button::before {
-            content: '< ';
-            opacity: 0.8;
+        model-viewer {
+            width: 100vw;
+            height: 100vh;
+            background-color: #0a1a4d;
         }
     </style>
 </head>
 <body>
-    <a href="../index.html" class="back-button">Return to Console</a>
-    
-    <div class="schematic-content">
-        <!-- Station Alpha content -->
-    </div>
+    <model-viewer 
+        src="/models/station.glb"
+        camera-controls
+        auto-rotate
+        camera-orbit="45deg 55deg 3m"
+        environment-image="neutral"
+        shadow-intensity="1"
+        exposure="1.5"
+        shadow-softness="1"
+        interaction-prompt="none">
+    </model-viewer>
 </body>
 </html> 
