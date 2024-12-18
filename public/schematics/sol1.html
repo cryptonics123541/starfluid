@@ -5,52 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sol-1 (HOME)</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #1c4e7a;
-            color: #00ffff;
-            font-family: 'Courier New', monospace;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        .back-button {
+        #backButton {
             position: fixed;
             top: 20px;
             left: 20px;
-            padding: 10px 20px;
-            background-color: rgba(0, 255, 255, 0.1);
-            border: 2px solid #00ffff;
-            color: #00ffff;
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            cursor: pointer;
-            z-index: 1000;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .back-button:hover {
-            background-color: rgba(0, 255, 255, 0.2);
-            transform: scale(1.05);
-        }
-
-        .back-button:before {
-            content: "←";
-            font-size: 20px;
-        }
-
-        .schematic-content {
-            padding: 20px;
-            margin-top: 60px;
+            padding: 15px;
+            background: red;  /* Making it red just to be very visible for testing */
+            color: white;
+            border: none;
+            z-index: 9999;
         }
     </style>
 </head>
 <body>
-    <a href="../index.html" class="back-button">Return to Console</a>
+    <button id="backButton" onclick="window.location.href='../index.html'">Back</button>
     
     <div class="schematic-content">
         <!-- Sol-1 content -->
