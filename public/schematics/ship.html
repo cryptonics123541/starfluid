@@ -19,9 +19,39 @@
             height: 100vh;
             background-color: #0a1a4d;
         }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: rgba(0, 255, 255, 0.1);
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            background-color: rgba(0, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .back-button:before {
+            content: "←";
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
+    <a href="/" class="back-button">RETURN TO TERMINAL</a>
     <model-viewer 
         src="/models/harbinger.glb"
         camera-controls
