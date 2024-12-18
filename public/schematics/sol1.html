@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sol-1 (HOME)</title>
-    <link rel="stylesheet" href="../styles.css">
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
     <style>
         body {
@@ -13,7 +12,6 @@
             background: #1c4e7a;
             color: #00ffff;
             font-family: 'Courier New', monospace;
-            position: relative;
         }
 
         model-viewer {
@@ -23,7 +21,7 @@
         }
 
         .back-button {
-            position: absolute;
+            position: fixed;
             top: 20px;
             left: 20px;
             padding: 10px 20px;
@@ -33,17 +31,26 @@
             font-family: 'Courier New', monospace;
             font-size: 16px;
             cursor: pointer;
-            z-index: 9999;
+            z-index: 1000;
             text-decoration: none;
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .back-button:hover {
             background-color: rgba(0, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .back-button:before {
+            content: "←";
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
+    <a href="/" class="back-button">RETURN TO TERMINAL</a>
     <model-viewer 
         src="/models/sol1.glb"
         camera-controls
@@ -55,6 +62,5 @@
         shadow-softness="1"
         interaction-prompt="none">
     </model-viewer>
-    <a href="../index.html" class="back-button">Return to Console</a>
 </body>
 </html>
