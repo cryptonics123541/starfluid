@@ -4,20 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sol-1 (HOME)</title>
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
     <style>
         body {
             margin: 0;
-            overflow: hidden;
+            padding: 0;
             background: #1c4e7a;
             color: #00ffff;
             font-family: 'Courier New', monospace;
-        }
-
-        model-viewer {
-            width: 100vw;
-            height: 100vh;
-            background-color: #0a1a4d;
+            min-height: 100vh;
+            position: relative;
         }
 
         .back-button {
@@ -47,20 +42,18 @@
             content: "←";
             font-size: 20px;
         }
+
+        .schematic-content {
+            padding: 20px;
+            margin-top: 60px;
+        }
     </style>
 </head>
 <body>
-    <a href="/" class="back-button">RETURN TO TERMINAL</a>
-    <model-viewer 
-        src="/models/sol1.glb"
-        camera-controls
-        auto-rotate
-        camera-orbit="45deg 55deg 3m"
-        environment-image="neutral"
-        shadow-intensity="1"
-        exposure="1.5"
-        shadow-softness="1"
-        interaction-prompt="none">
-    </model-viewer>
+    <a href="../index.html" class="back-button">Return to Console</a>
+    
+    <div class="schematic-content">
+        <!-- Sol-1 content -->
+    </div>
 </body>
 </html>
