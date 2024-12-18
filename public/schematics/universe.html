@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTRO-7 Universe Schematics</title>
+    <title>Universe Viewer</title>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
     <style>
         body {
             margin: 0;
             overflow: hidden;
-            background: #1c4e7a;
-            color: #00ffff;
-            font-family: 'Courier New', monospace;
+            background: #000;
         }
 
         model-viewer {
             width: 100vw;
             height: 100vh;
-            background-color: #0a1a4d;
+            --poster-color: transparent;
+            background-color: #000;
+        }
+        /* Add glow effect for stars */
+        model-viewer::part(default) {
+            filter: brightness(1.2) contrast(1.1);
         }
     </style>
 </head>
@@ -26,11 +29,14 @@
         src="/models/universe.glb"
         camera-controls
         auto-rotate
-        camera-orbit="45deg 55deg 3m"
+        camera-orbit="0deg 75deg 50m"
+        min-camera-orbit="auto auto 1m"
+        max-camera-orbit="auto auto 1000m"
+        orbit-sensitivity="0.5"
+        zoom-sensitivity="0.1"
         environment-image="neutral"
         shadow-intensity="1"
-        exposure="1.5"
-        shadow-softness="1"
+        exposure="1.0"
         interaction-prompt="none">
     </model-viewer>
 </body>
