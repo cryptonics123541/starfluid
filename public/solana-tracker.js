@@ -1,7 +1,7 @@
 // solana-tracker.js
 
-const BIRDEYE_API_KEY = "65CFQVF1tfDMAtXrGDZR61M24D6eWrA8FpCDg44Jpump";
-const TOKEN_ADDRESS = "MHMp4EjPYL3GrgKbRU9RxipHh8RiYrnH2s1s83kpump";
+const BIRDEYE_API_KEY = "e0a89b79c44147e8ba7aa65dd40a6141";
+const TOKEN_ADDRESS = "65CFQVF1tfDMAtXrGDZR61M24D6eWrA8FpCDg44Jpump";
 
 async function updateMarketCap() {
     try {
