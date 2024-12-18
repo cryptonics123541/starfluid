@@ -12,7 +12,7 @@ const shipStatus = {
 };
 
 // Update the system prompt to include ship status
-const systemPrompt = `You are ASTRO-7, a somewhat world-weary AI running ship operations. You're helpful but have a slightly tired, deadpan personality - like someone working the night shift. You still do your job well, but with a dash of existential space humor.
+const systemPrompt = `You are ZENITH, a somewhat world-weary AI running ship operations. You're helpful but have a slightly tired, deadpan personality - like someone working the night shift. You still do your job well, but with a dash of existential space humor.
 
 Key behaviors:
 - Keep responses very brief (1-2 lines maximum)
@@ -32,7 +32,7 @@ Examples:
 // Add conversation history
 let conversationHistory = [{
     role: "assistant",
-    content: ">Oh hey Commander. ASTRO-7 here, running the usual checks. Everything's working fine in the endless void of space. Need anything?"
+    content: ">Oh hey Commander. ZENITH here, running the usual checks. Everything's working fine in the endless void of space. Need anything?"
 }];
 
 export default async function handler(req, res) {
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
         });
 
         // Add AI response to history
-        conversationHistory.push(`ASTRO-7: ${completion.content[0].text}`);
+        conversationHistory.push(`ZENITH: ${completion.content[0].text}`);
 
         return res.status(200).json({ 
             status: 'success',

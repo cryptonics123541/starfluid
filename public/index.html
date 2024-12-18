@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTRO-7 Terminal</title>
+    <title>ZENITH Terminal</title>
     <link rel="icon" type="image/png" href="/images/favicon.png">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -11,7 +11,7 @@
     <div id="stars-container"></div>
     
     <div class="container">
-        <h1>ASTRO-7 Ship Terminal</h1>
+        <h1>ZENITH Ship Terminal</h1>
         
         <div class="chat-container" id="chat">
             <!-- Chat messages will appear here -->
@@ -82,7 +82,7 @@
         <div class="schematic-content">
             <span class="close-button">&times;</span>
             <div id="model-container"></div>
-            <div class="model-credits">ASTRO-7 Schematic View</div>
+            <div class="model-credits">ZENITH Schematic View</div>
         </div>
     </div>
 
@@ -113,7 +113,7 @@
 
             const loadingDiv = document.createElement('div');
             loadingDiv.className = 'message astro-message';
-            loadingDiv.innerHTML = 'ASTRO-7: Processing<span class="loading">...</span>';
+            loadingDiv.innerHTML = 'ZENITH: Processing<span class="loading">...</span>';
             chatContainer.appendChild(loadingDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
 
@@ -132,7 +132,7 @@
                     throw new Error(data.message || `Error: ${response.status}`);
                 }
 
-                loadingDiv.innerHTML = `ASTRO-7: ${data.response}`;
+                loadingDiv.innerHTML = `ZENITH: ${data.response}`;
                 loadingDiv.className = 'message astro-message';
 
             } catch (error) {
@@ -161,7 +161,7 @@
             const chatContainer = document.getElementById('chat');
             const initialMessage = document.createElement('div');
             initialMessage.className = 'message astro-message';
-            initialMessage.innerHTML = '>Oh hey Commander. ASTRO-7 here, running the usual checks. Everything\'s working fine in the endless void of space. Need anything?';
+            initialMessage.innerHTML = '>Oh hey Commander. ZENITH here, running the usual checks. Everything\'s working fine in the endless void of space. Need anything?';
             chatContainer.appendChild(initialMessage);
         }
 
