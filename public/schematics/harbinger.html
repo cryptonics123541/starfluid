@@ -4,22 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ship Schematics</title>
-    <link rel="stylesheet" href="../styles.css">
     <style>
         body {
             margin: 0;
-            padding: 20px;
-            background: var(--bg-dark);
+            padding: 0;
+            background: #001620;
             min-height: 100vh;
-            color: var(--primary);
-        }
-
-        .schematic-content {
-            margin-top: 60px;  /* Space for the back button */
-            padding: 20px;
-            background: rgba(0, 22, 32, 0.4);
-            border: 1px solid rgba(100, 255, 255, 0.3);
-            border-radius: 8px;
         }
 
         .back-button {
@@ -27,36 +17,20 @@
             top: 20px;
             left: 20px;
             padding: 10px 20px;
-            background: var(--bg-dark);
-            color: var(--primary);
-            border: 1px solid rgba(100, 255, 255, 0.3);
+            background: #001620;
+            color: #64ffff;
+            border: 1px solid #64ffff;
             border-radius: 8px;
-            cursor: pointer;
             font-family: 'Courier New', monospace;
-            transition: all 0.3s ease;
-            z-index: 1000;
             text-decoration: none;
-            display: inline-block;
         }
 
         .back-button:hover {
             background: rgba(100, 255, 255, 0.1);
-            border-color: var(--primary);
-            box-shadow: var(--border-glow);
-            transform: translateY(-2px);
-        }
-
-        .back-button::before {
-            content: '< ';
-            opacity: 0.8;
         }
     </style>
 </head>
 <body>
     <a href="../index.html" class="back-button">Return to Console</a>
-    
-    <div class="schematic-content">
-        <!-- Ship Schematics content -->
-    </div>
 </body>
 </html> 
