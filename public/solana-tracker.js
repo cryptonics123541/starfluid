@@ -1,7 +1,10 @@
 // solana-tracker.js
 
 const BIRDEYE_API_KEY = "e0a89b79c44147e8ba7aa65dd40a6141";
-const TOKEN_ADDRESS = "6VvpLFeFipCPWv7DijaLkrjYkptJTn9TgCvYP9Xvpump";
+const TOKEN_ADDRESS = "6VvpLFeFipCPWv7DijaLkrjYkptJTn9TgCPYP9Xvpump";
+
+// Add this line at the start to set the contract address immediately
+document.getElementById('contractAddress').textContent = TOKEN_ADDRESS;
 
 async function updateMarketCap() {
     try {
@@ -34,9 +37,6 @@ async function updateMarketCap() {
             
             // Check milestones
             checkMilestones(marketCap);
-
-            // Add this to where you're updating the market cap
-            document.getElementById('contractAddress').textContent = "YOUR_CONTRACT_ADDRESS_HERE";
         } else {
             throw new Error('Invalid data received');
         }
