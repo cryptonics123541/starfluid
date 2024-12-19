@@ -1,7 +1,7 @@
 // solana-tracker.js
 
 const BIRDEYE_API_KEY = "e0a89b79c44147e8ba7aa65dd40a6141";
-const TOKEN_ADDRESS = "6VvpLFeFipCPWv7DijaLkrjYkptJTn9TgCPYP9Xvpump";
+const TOKEN_ADDRESS = "JmAWYQUoxZfRzrvrkfusgUin4LqwttLKfaA18qFpump";
 
 // Add this line at the start to set the contract address immediately
 document.getElementById('contractAddress').textContent = TOKEN_ADDRESS;
