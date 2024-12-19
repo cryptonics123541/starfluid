@@ -42,7 +42,7 @@ async function updateMarketCap() {
         }
     } catch (error) {
         console.error('Error fetching data:', error);
-        document.getElementById('marketCap').textContent = 'Error loading data';
+        document.getElementById('marketCap').textContent = 'Fetching market cap api data (this may take 5-10 min)';
     }
 }
 
