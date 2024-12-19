@@ -504,3 +504,26 @@ button:hover {
 .info-section a.unlocked::after {
     content: none;
 }
+
+/* Add these styles */
+.ca-value {
+    color: var(--primary);
+    text-shadow: var(--text-glow);
+    margin-right: 10px;
+}
+
+.copy-button {
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 2px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Courier New', monospace;
+}
+
+.copy-button:hover {
+    background: rgba(0, 255, 255, 0.2);
+    transform: scale(1.05);
+}

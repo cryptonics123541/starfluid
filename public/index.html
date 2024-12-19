@@ -91,6 +91,11 @@
             <span class="market-cap-label">Market Cap:</span>
             <span class="market-cap-value" id="marketCap">Loading...</span>
         </div>
+        <div>
+            <span class="market-cap-label">CA:</span>
+            <span class="ca-value" id="contractAddress">Loading...</span>
+            <button class="copy-button" onclick="copyContractAddress()">Copy</button>
+        </div>
     </div>
 
     <!-- Scripts -->
@@ -225,6 +230,17 @@
 
         // Initial update
         updateShipStatus();
+
+        function copyContractAddress() {
+            const caText = document.getElementById('contractAddress').textContent;
+            navigator.clipboard.writeText(caText).then(() => {
+                const copyBtn = document.querySelector('.copy-button');
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy';
+                }, 2000);
+            });
+        }
     </script>
 </body>
 </html>

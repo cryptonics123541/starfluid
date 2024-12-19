@@ -34,6 +34,9 @@ async function updateMarketCap() {
             
             // Check milestones
             checkMilestones(marketCap);
+
+            // Add this to where you're updating the market cap
+            document.getElementById('contractAddress').textContent = "YOUR_CONTRACT_ADDRESS_HERE";
         } else {
             throw new Error('Invalid data received');
         }
