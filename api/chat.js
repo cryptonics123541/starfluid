@@ -35,7 +35,7 @@ Examples:
 // Update initial conversation history
 let conversationHistory = [{
     role: "assistant",
-    content: ">TARS online. Humor setting at 75%. How can I help, Cooper?"
+    content: ">TARS online. How can I help, sir?"
 }];
 
 // Add humor setting handler
