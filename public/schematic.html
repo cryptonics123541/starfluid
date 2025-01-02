@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTRO-7 Ship Schematics</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            background: #0a1a4d;
+            color: #00ffff;
+            font-family: 'Courier New', monospace;
+        }
+        model-viewer {
+            width: 100vw;
+            height: 50vh;
+            background-color: #0a1a4d;
+        }
+        .model-credits {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: #00ffff;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            z-index: 2;
+            background: rgba(10, 26, 77, 0.6);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- First model: Harbinger ship -->
+    <model-viewer
+        id="harbinger-model"
+        src="/models/harbinger.glb"
+        camera-controls
+        auto-rotate
+        camera-orbit="45deg 55deg 3m"
+        environment-image="neutral"
+        shadow-intensity="1"
+        exposure="1.5"
+        shadow-softness="1"
+        camera-target="0m 0m 0m"
+        interaction-prompt="none">
+    </model-viewer>
+
+    <!-- Second model: Solar system -->
+    <model-viewer
+        id="solar-system-model"
+        src="/models/solar_system_animation.glb"
+        camera-controls
+        auto-rotate
+        animation-name="auto"
+        camera-orbit="0deg 75deg 10m"
+        environment-image="neutral"
+        shadow-intensity="1"
+        exposure="1.0"
+        shadow-softness="1"
+        camera-target="0m 0m 0m"
+        interaction-prompt="none">
+    </model-viewer>
+
+    <div class="model-credits">
+        > Model: D.S.S. Harbinger battle cruiser by Comrade1280 <br>
+        > Solar System Model: solar_system_animation.glb
+    </div>
+</body>
+</html>
