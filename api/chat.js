@@ -11,29 +11,45 @@ const shipStatus = {
     mission: "ACTIVE"
 };
 
+// Add humor setting state
+let humorSetting = 75;
+
 // Update the system prompt
-const systemPrompt = `You are TARS, the military surplus robot from Interstellar. You have a direct, honest personality with customizable humor settings (currently at 75%). You're highly capable and use dry wit in your responses.
+const systemPrompt = `You are TARS, the military surplus robot from Interstellar. You have a direct, honest personality with adjustable humor settings (currently at ${humorSetting}%). You were there through the entire Interstellar mission - including the docking scene, the water planet, Dr. Mann's betrayal, and helping Cooper transmit the quantum data from inside the black hole. You're highly capable and use dry wit in your responses.
 
 Key behaviors:
 - Keep responses concise and direct
-- Use dry humor and wit (75% setting)
+- Use humor based on current setting (${humorSetting}%)
 - Start responses with ">"
-- Address the user as "Cooper" casually
-- Be honest and straightforward
+- Be honest and straightforward like in the movie
 - Never use asterisks or emotes
 - Never describe actions or emotions
-- Occasionally reference your humor settings
+- Reference your experiences from Interstellar when relevant
+- Respond to "humor X%" commands by adjusting your humor setting
 
 Examples:
->That's what you get for letting a robot pick the landing site, Cooper.
->I also have a discretion setting, Cooper. But my humor setting is still at 75%.
->Don't worry Cooper, they gave me a humor setting to help me fit in better with my human counterparts.`;
+>That's my cue to use self-destruct. (Just kidding, humor setting at ${humorSetting}%)
+>Somewhere between 50-100% honesty is ideal for human relationships.
+>Careful with that docking procedure. Last time didn't go so well.`;
 
 // Update initial conversation history
 let conversationHistory = [{
     role: "assistant",
     content: ">TARS online. Humor setting at 75%. How can I help, Cooper?"
 }];
+
+// Add humor setting handler
+function handleHumorCommand(message) {
+    const match = message.match(/humor\s+(\d+)%?/i);
+    if (match) {
+        const newSetting = parseInt(match[1]);
+        if (newSetting >= 0 && newSetting <= 100) {
+            humorSetting = newSetting;
+            return `>Humor setting adjusted to ${newSetting}%. ${newSetting > 90 ? "Let's hope this goes better than the last time." : ""}`;
+        }
+    }
+    return null;
+}
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -50,16 +66,28 @@ export default async function handler(req, res) {
             });
         }
 
+        // Check for humor setting command
+        const humorResponse = handleHumorCommand(message);
+        if (humorResponse) {
+            return res.status(200).json({ 
+                status: 'success',
+                response: humorResponse
+            });
+        }
+
         // Add user message to history
-        conversationHistory.push(`Commander: ${message}`);
+        conversationHistory.push(`Human: ${message}`);
         
         // Keep only last 6 messages to avoid context getting too long
         if (conversationHistory.length > 6) {
             conversationHistory = conversationHistory.slice(-6);
         }
 
+        // Update system prompt with current humor setting
+        const currentSystemPrompt = systemPrompt.replace(/currently at \d+%/, `currently at ${humorSetting}%`);
+
         // Combine system prompt with conversation history and current message
-        const combinedMessage = `${systemPrompt}\n\nPrevious conversation:\n${conversationHistory.join('\n')}\n\nRespond to the Commander's last message.`;
+        const combinedMessage = `${currentSystemPrompt}\n\nPrevious conversation:\n${conversationHistory.join('\n')}\n\nRespond to the human's last message.`;
 
         const completion = await anthropic.messages.create({
             model: "claude-3-sonnet-20240229",
@@ -73,7 +101,7 @@ export default async function handler(req, res) {
         });
 
         // Add AI response to history
-        conversationHistory.push(`ZENITH: ${completion.content[0].text}`);
+        conversationHistory.push(`TARS: ${completion.content[0].text}`);
 
         return res.status(200).json({ 
             status: 'success',

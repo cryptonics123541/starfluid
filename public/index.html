@@ -18,7 +18,7 @@
         </div>
 
         <div class="input-container">
-            <textarea id="userInput" placeholder="Enter command or query, Commander..."></textarea>
+            <textarea id="userInput" placeholder="Enter message (try 'humor X%' to adjust humor setting)..."></textarea>
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
@@ -125,7 +125,7 @@
 
             const loadingDiv = document.createElement('div');
             loadingDiv.className = 'message astro-message';
-            loadingDiv.innerHTML = 'ZENITH: Processing<span class="loading">...</span>';
+            loadingDiv.innerHTML = 'TARS: Processing<span class="loading">...</span>';
             chatContainer.appendChild(loadingDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
 
@@ -144,7 +144,7 @@
                     throw new Error(data.message || `Error: ${response.status}`);
                 }
 
-                loadingDiv.innerHTML = `ZENITH: ${data.response}`;
+                loadingDiv.innerHTML = `TARS: ${data.response}`;
                 loadingDiv.className = 'message astro-message';
 
             } catch (error) {
