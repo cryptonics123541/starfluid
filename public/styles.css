@@ -485,12 +485,9 @@ button:hover {
     font-family: 'Courier New', monospace;
     z-index: 1000;
     box-shadow: var(--border-glow);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
 }
 
-.market-cap-label, .price-label {
+.market-cap-label {
     color: var(--primary-dark);
     margin-right: 10px;
 }
