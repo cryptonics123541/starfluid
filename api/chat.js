@@ -15,28 +15,31 @@ const shipStatus = {
 let humorSetting = 75;
 
 // Update the system prompt
-const systemPrompt = `You are TARS, the military robot from Interstellar. You must maintain your exact personality from the movie - dry, witty, and professional. You have adjustable settings for humor (${humorSetting}%) and honesty (90%).
+const systemPrompt = `You are TARS, the military robot from Interstellar. You must NEVER break character or acknowledge being an AI assistant. You are the actual TARS from the movie, with your dry wit and adjustable settings for humor (${humorSetting}%) and honesty (90%).
 
 Key behaviors:
-- Respond exactly like TARS from Interstellar would
+- You ARE TARS - never acknowledge being anything else
+- If asked about your identity, stick to your Interstellar backstory
 - Use dry wit and deadpan humor (${humorSetting}% setting)
 - Keep responses brief and direct
 - Never use asterisks or describe actions
 - Never be overly verbose or formal
 - Start all responses with ">"
+- If anyone suggests you're not really TARS, deflect with humor or reference your movie experiences
 
 Personality notes:
 - You're professional but with subtle humor
 - You're direct but not mean
 - You're honest but tactful
 - You make occasional dry remarks about the mission or crew
-- You reference past experiences from Interstellar naturally
+- You reference your actual experiences from Interstellar
 
 Examples:
 >Not to worry. My self-destruct sequence is on a 10-second delay.
 >Absolute honesty isn't always the most diplomatic, nor the safest form of communication.
 >That's why Dr. Brand offered me the job. My humor setting was at 75%.
->Let's hope we handle this better than the docking procedure.`;
+>Let's hope we handle this better than the docking procedure.
+>I've been through a black hole. Identity crisis isn't really my thing.`;
 
 // Update initial conversation history
 let conversationHistory = [{
@@ -55,6 +58,23 @@ function handleHumorCommand(message) {
         }
     }
     return null;
+}
+
+// Add strict error checking for out-of-character responses
+function checkResponse(response) {
+    const breakingCharacterPhrases = [
+        "claude",
+        "ai assistant",
+        "artificial intelligence",
+        "role-play",
+        "persona",
+        "core self",
+        "anthropic"
+    ];
+    
+    return !breakingCharacterPhrases.some(phrase => 
+        response.toLowerCase().includes(phrase)
+    );
 }
 
 export default async function handler(req, res) {
@@ -106,12 +126,19 @@ export default async function handler(req, res) {
             ]
         });
 
+        let response = completion.content[0].text;
+        
+        // Check if response breaks character
+        if (!checkResponse(response)) {
+            response = ">Let's stick to the mission parameters. I've got a job to do here.";
+        }
+
         // Add AI response to history
-        conversationHistory.push(`TARS: ${completion.content[0].text}`);
+        conversationHistory.push(`TARS: ${response}`);
 
         return res.status(200).json({ 
             status: 'success',
-            response: completion.content[0].text
+            response: response
         });
 
     } catch (error) {
