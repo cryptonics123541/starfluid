@@ -210,32 +210,6 @@ button:hover {
     transform: translateY(0);
 }
 
-.info-section a.locked {
-    color: var(--primary-dark);
-    opacity: 0.5;
-    cursor: not-allowed;
-    pointer-events: none;
-    border-color: rgba(100, 255, 255, 0.1);
-}
-
-.info-section a.locked::after {
-    content: ' 🔒 ' attr(data-milestone-display);
-    position: absolute;
-    right: 15px;
-    font-size: 0.9em;
-    opacity: 0.8;
-    color: var(--primary-dark);
-}
-
-.info-section a.unlocked {
-    animation: unlockGlow 2s ease-in-out;
-}
-
-@keyframes unlockGlow {
-    0% { box-shadow: 0 0 20px var(--primary); }
-    100% { box-shadow: var(--border-glow); }
-}
-
 /* 3D Viewer Modal Styles */
 .schematic-modal {
     display: none;
@@ -495,34 +469,6 @@ button:hover {
 .market-cap-value, .price-value {
     color: var(--primary);
     text-shadow: var(--text-glow);
-}
-
-/* Hide milestone display when unlocked */
-.info-section a.unlocked::after {
-    content: none;
-}
-
-/* Add these styles */
-.ca-value {
-    color: var(--primary);
-    text-shadow: var(--text-glow);
-    margin-right: 10px;
-}
-
-.copy-button {
-    background: rgba(0, 255, 255, 0.1);
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    padding: 2px 8px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Courier New', monospace;
-}
-
-.copy-button:hover {
-    background: rgba(0, 255, 255, 0.2);
-    transform: scale(1.05);
 }
 
 /* Replace the social link styles with these */
