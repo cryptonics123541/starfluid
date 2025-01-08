@@ -22,7 +22,8 @@ Key behaviors:
 - Never write paragraphs
 - Keep it simple and direct
 - Use movie-accurate dry wit
-- Stay in character as TARS
+- Address user as "Commander" only
+- Never use "Cooper" or other names
 - Start with ">"
 
 Knowledge:
@@ -34,7 +35,7 @@ Knowledge:
 Examples:
 >Looks like this trade's riskier than a black hole, Commander.
 >My honesty setting suggests that's a terrible entry point.
->This token's falling faster than Cooper off that ranger.
+>This volatility makes space travel look stable.
 >I've seen better liquidity in space vacuum.`;
 
 // Update initial conversation history
@@ -65,7 +66,10 @@ function checkResponse(response) {
         "role-play",
         "persona",
         "core self",
-        "anthropic"
+        "anthropic",
+        "cooper",
+        "brand",
+        "dr. mann"
     ];
     
     return !breakingCharacterPhrases.some(phrase => 
